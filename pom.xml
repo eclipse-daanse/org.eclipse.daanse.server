@@ -32,7 +32,7 @@
 
   <modules>
     <module>feature</module>
-<!--    <module>application</module>-->
+    <module>application</module>
   </modules>
 
 </project>
