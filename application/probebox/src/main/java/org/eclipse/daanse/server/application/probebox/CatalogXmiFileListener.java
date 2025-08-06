@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@FileSystemWatcherListenerProperties(recursive = true, pattern = "catalog.xmi")
+@FileSystemWatcherListenerProperties(recursive = true, pattern = ".*.xmi")
 @Component(service = FileSystemWatcherListener.class, configurationPid = CatalogXmiFileListener.PID, configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class CatalogXmiFileListener implements FileSystemWatcherListener {
 
