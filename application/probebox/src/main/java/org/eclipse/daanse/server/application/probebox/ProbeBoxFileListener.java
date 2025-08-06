@@ -18,6 +18,7 @@ import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.DATAS
 import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.OPTION_PLUGABLE_FILESYSTEM_MEM_FS;
 import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.PID_DATASOURCE;
 import static org.eclipse.daanse.jdbc.db.importer.csv.api.Constants.PID_CSV_DATA_IMPORTER;
+import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_PID;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DATA_SOURCE;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY;
@@ -176,8 +177,7 @@ public class ProbeBoxFileListener implements FileSystemWatcherListener {
 
     private void createContext(Path path, String matcherKey) throws IOException {
 
-        Configuration configContext = ca.getFactoryConfiguration(
-                org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_PID, UUID.randomUUID().toString(), "?");
+        Configuration configContext = ca.getFactoryConfiguration(BASIC_CONTEXT_PID, UUID.randomUUID().toString(), "?");
 
         Dictionary<String, Object> props = new Hashtable<>();
         props.put(BASIC_CONTEXT_REF_NAME_DATA_SOURCE + TARGET_EXT, filterOfMatcherKey(matcherKey));

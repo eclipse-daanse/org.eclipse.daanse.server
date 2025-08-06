@@ -46,7 +46,8 @@
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.importer.csv',\
 	bnd.identity;id='org.gecko.emf.osgi.component',\
 	bnd.identity;id='org.eclipse.daanse.sql.guard.api',\
-	bnd.identity;id='org.eclipse.daanse.sql.guard.jsqltranspiler'
+	bnd.identity;id='org.eclipse.daanse.sql.guard.jsqltranspiler',\
+	bnd.identity;id='org.eclipse.daanse.rolap.core'
 
 
 # This will help us keep -runbundles sorted
@@ -89,9 +90,13 @@
 	org.eclipse.daanse.mdx.parser.ccc;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.format;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.spi;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.xmla.bridge;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.emf;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.pojo;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.server.application.probebox;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
