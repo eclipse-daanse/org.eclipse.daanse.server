@@ -11,12 +11,12 @@
  *   SmartCity Jena, Stefan Bischof - initial
  *
  */
-package org.eclipse.daanse.server.application.probebox;
+package org.eclipse.daanse.server.application.probe;
 
-import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.DATASOURCE_PROPERTY_IDENTIFIER;
-import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.DATASOURCE_PROPERTY_PLUGABLE_FILESYSTEM;
-import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.OPTION_PLUGABLE_FILESYSTEM_MEM_FS;
-import static org.eclipse.daanse.jdbc.datasource.metatype.h2.api.Constants.PID_DATASOURCE;
+import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.DATASOURCE_PROPERTY_IDENTIFIER;
+import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.DATASOURCE_PROPERTY_PLUGABLE_FILESYSTEM;
+import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.OPTION_PLUGABLE_FILESYSTEM_MEM_FS;
+import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.PID_DATASOURCE;
 import static org.eclipse.daanse.jdbc.db.importer.csv.api.Constants.PID_CSV_DATA_IMPORTER;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_PID;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER;
@@ -50,17 +50,17 @@ import org.osgi.service.component.annotations.RequireServiceComponentRuntime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(configurationPid = ProbeBoxFileListener.PID, configurationPolicy = ConfigurationPolicy.REQUIRE)
+@Component(configurationPid = ProbeFileListener.PID, configurationPolicy = ConfigurationPolicy.REQUIRE)
 @RequireConfigurationAdmin
 @RequireServiceComponentRuntime
 @FileSystemWatcherListenerProperties(recursive = false)
-public class ProbeBoxFileListener implements FileSystemWatcherListener {
+public class ProbeFileListener implements FileSystemWatcherListener {
 
     static final String MATCHER_KEY = "matcherKey";
 
-    private static final Logger logger = LoggerFactory.getLogger(ProbeBoxFileListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProbeFileListener.class);
 
-    static final String PID = "org.eclipse.daanse.server.application.probebox.CatalogsFileListener";
+    static final String PID = "org.eclipse.daanse.server.application.probe.CatalogsFileListener";
 
     static final String KEY_FILE_CONTEXT_MATCHER = "file.context.matcher";
 

@@ -11,7 +11,7 @@
 *   SmartCity Jena - initial
 *   Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.server.application.probebox;
+package org.eclipse.daanse.server.application.probe;
 
 import static org.eclipse.daanse.rolap.mapping.emf.rolapmapping.provider.Constants.PID_EMF_MAPPING_PROVIDER;
 import static org.eclipse.daanse.rolap.mapping.emf.rolapmapping.provider.Constants.RESOURCE_URL;
@@ -43,7 +43,7 @@ public class CatalogXmiFileListener implements FileSystemWatcherListener {
 
     private static final Logger logger = LoggerFactory.getLogger(CatalogXmiFileListener.class);
 
-    public static final String PID = "org.eclipse.daanse.server.application.probebox.MappingFileListener";
+    public static final String PID = "org.eclipse.daanse.server.application.probe.MappingFileListener";
 
     @Reference
     private ConfigurationAdmin ca;
@@ -52,7 +52,7 @@ public class CatalogXmiFileListener implements FileSystemWatcherListener {
 
     @Activate
     public CatalogXmiFileListener(Map<String, Object> props) {
-        this.matcherKey = (String) props.get(ProbeBoxFileListener.MATCHER_KEY);
+        this.matcherKey = (String) props.get(ProbeFileListener.MATCHER_KEY);
     }
 
     private Path basePath;
@@ -84,7 +84,7 @@ public class CatalogXmiFileListener implements FileSystemWatcherListener {
 
             Dictionary<String, Object> props = new Hashtable<>();
             props.put(RESOURCE_URL, basePath.resolve("catalog.xmi").toAbsolutePath().toString());
-            props.put(ProbeBoxFileListener.KEY_FILE_CONTEXT_MATCHER, matcherKey);
+            props.put(ProbeFileListener.KEY_FILE_CONTEXT_MATCHER, matcherKey);
 
             configuration.update(props);
         } catch (IOException e) {

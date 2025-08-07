@@ -19,7 +19,7 @@
     <artifactId>org.eclipse.daanse.server.application</artifactId>
     <version>${revision}</version>
   </parent>
-  <artifactId>org.eclipse.daanse.server.application.probebox</artifactId>
+  <artifactId>org.eclipse.daanse.server.application.probe</artifactId>
 
   <build>
     <plugins>
@@ -30,7 +30,7 @@
         <configuration>
           <failOnChanges>false</failOnChanges>
           <bndruns>
-            <bndrun>daanse.probebox.bndrun</bndrun>
+            <bndrun>daanse.probe.bndrun</bndrun>
           </bndruns>
           <exporter>bnd.executablejar</exporter>
           <includeDependencyManagement>true</includeDependencyManagement>
@@ -62,7 +62,7 @@
     </dependency>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jdbc.datasource.metatype.h2</artifactId>
+      <artifactId>org.eclipse.daanse.jdbc.datasource.h2</artifactId>
       <version>${revision}</version>
       <scope>compile</scope>
     </dependency>
@@ -70,12 +70,6 @@
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.olap.common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.rolap.core</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
