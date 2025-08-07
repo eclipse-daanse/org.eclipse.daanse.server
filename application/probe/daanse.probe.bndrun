@@ -1,0 +1,129 @@
+#*******************************************************************************
+# Copyright (c)  2025 Contributors to the Eclipse Foundation
+#
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+#   Contributors:
+#   SmartCity Jena - initial
+#   Stefan Bischof (bipolis.org) - initial
+#*******************************************************************************
+
+-runtrace: true
+
+-runproperties: \
+    org.slf4j.simpleLogger.defaultLogLevel=error,\
+	org.osgi.service.http.port=8090,\
+    logback.configurationFile=./logback.xml
+
+-runpath: \
+	ch.qos.logback.classic,\
+	ch.qos.logback.core,\
+	slf4j.api
+
+-runee: JavaSE-21
+-runfw: org.apache.felix.framework
+
+-runrequires: \
+	bnd.identity;id='${project.artifactId}',\
+	bnd.identity;id='org.glassfish.hk2.osgi-resource-locator',\
+	bnd.identity;id='com.sun.xml.messaging.saaj.impl',\
+	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
+	bnd.identity;id='org.apache.felix.metatype',\
+	bnd.identity;id='org.eclipse.daanse.olap.xmla.bridge',\
+	bnd.identity;id='org.eclipse.daanse.xmla.server.jakarta.saaj',\
+	bnd.identity;id='ch.qos.logback.classic',\
+	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.h2',\
+	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.h2',\
+	bnd.identity;id='org.eclipse.daanse.jdbc.db.core',\
+	bnd.identity;id='org.eclipse.daanse.mdx.parser.api',\
+	bnd.identity;id='org.eclipse.daanse.mdx.parser.ccc',\
+	bnd.identity;id='org.eclipse.daanse.rolap.mapping.api',\
+	bnd.identity;id='org.eclipse.daanse.rolap.mapping.emf',\
+	bnd.identity;id='org.eclipse.daanse.jdbc.db.importer.csv',\
+	bnd.identity;id='org.gecko.emf.osgi.component',\
+	bnd.identity;id='org.eclipse.daanse.sql.guard.api',\
+	bnd.identity;id='org.eclipse.daanse.sql.guard.jsqltranspiler',\
+	bnd.identity;id='org.eclipse.daanse.rolap.core'
+
+
+# This will help us keep -runbundles sorted
+-runstartlevel: \
+    order=sortbynameversion,\
+    begin=-1
+
+-runbundles: \
+	ai.starlake.transpiler;version='[1.0.0,1.0.1)',\
+	ch.qos.logback.classic;version='[1.5.6,1.5.7)',\
+	com.github.ben-manes.caffeine;version='[3.1.8,3.1.9)',\
+	com.h2database;version='[2.3.230,2.3.231)',\
+	com.sun.xml.messaging.saaj.impl;version='[3.0.3,3.0.4)',\
+	de.siegmar.fastcsv;version='[3.1.0,3.1.1)',\
+	jakarta.activation-api;version='[2.1.2,2.1.3)',\
+	jakarta.xml.soap-api;version='[3.0.1,3.0.2)',\
+	json;version='[20250517.0.0,20250517.0.1)',\
+	net.sf.jsqlparser;version='[5.4.0,5.4.1)',\
+	org.apache.aries.spifly.dynamic.framework.extension;version='[1.3.7,1.3.8)',\
+	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
+	org.apache.felix.http.jetty12.light;version='[1.0.36,1.0.37)',\
+	org.apache.felix.http.servlet-api;version='[3.0.0,3.0.1)',\
+	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
+	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
+	org.eclipse.daanse.io.fs.watcher.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.io.fs.watcher.watchservice;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jakarta.servlet.soap;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.h2;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.dialect.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.dialect.db.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.dialect.db.h2;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.importer.csv;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.db.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.model.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.model.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.parser.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.parser.ccc;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.format;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.spi;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.xmla.bridge;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.emf;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.pojo;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.server.application.probe;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.adapter.soapmessage;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.jakarta.saaj;version='[0.0.1,0.0.2)',\
+	org.eclipse.emf.common;version='[2.30.0,2.30.1)',\
+	org.eclipse.emf.ecore;version='[2.36.0,2.36.1)',\
+	org.eclipse.emf.ecore.xmi;version='[2.37.0,2.37.1)',\
+	org.eclipse.jetty.alpn.server;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.ee10.servlet;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.http;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.http2.common;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.http2.hpack;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.http2.server;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.io;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.jmx;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.security;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.server;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.session;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.util;version='[12.0.23,12.0.24)',\
+	org.gecko.emf.osgi.component;version='[6.2.0,6.2.1)',\
+	org.glassfish.hk2.osgi-resource-locator;version='[2.5.0,2.5.1)',\
+	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
+	org.osgi.service.component;version='[1.5.1,1.5.2)',\
+	org.osgi.service.log;version='[1.5.0,1.5.1)',\
+	org.osgi.util.converter;version='[1.0.9,1.0.10)',\
+	org.osgi.util.function;version='[1.2.0,1.2.1)',\
+	org.osgi.util.promise;version='[1.3.0,1.3.1)'

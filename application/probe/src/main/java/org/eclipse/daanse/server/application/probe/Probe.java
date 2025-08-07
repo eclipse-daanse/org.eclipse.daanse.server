@@ -11,7 +11,7 @@
 *   SmartCity Jena - initial
 *   Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.server.application.probebox;
+package org.eclipse.daanse.server.application.probe;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 @RequireConfigurationAdmin
 @RequireServiceComponentRuntime
-public class ProbeBox {
+public class Probe {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProbeBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
     private static final String CONFIG_IDENT = "probeBox";
     private static final String TARGET_EXT = ".target";
@@ -70,7 +70,7 @@ public class ProbeBox {
 
     private void initFileListener() throws IOException {
 
-        confDataSource = ca.getFactoryConfiguration(ProbeBoxFileListener.PID, CONFIG_IDENT, "?");
+        confDataSource = ca.getFactoryConfiguration(ProbeFileListener.PID, CONFIG_IDENT, "?");
 
         Dictionary<String, Object> propsDS = new Hashtable<>();
         propsDS.put(FileSystemWatcherWhiteboardConstants.FILESYSTEM_WATCHER_PATH, CATALOG_PATH);

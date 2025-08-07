@@ -11,4 +11,4 @@
 *   SmartCity Jena - initial
 *   Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.server.application.probebox;
+package org.eclipse.daanse.server.application.probe;
