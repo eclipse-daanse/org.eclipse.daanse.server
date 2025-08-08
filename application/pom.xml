@@ -25,6 +25,7 @@
   <modules>
     <module>probe</module>
     <module>pivot</module>
+    <module>playground</module>
   </modules>
 
   <dependencies>
