@@ -14,7 +14,6 @@
 package org.eclipse.daanse.server.application.probe;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -36,12 +35,12 @@ import org.slf4j.LoggerFactory;
 @RequireServiceComponentRuntime
 public class Probe {
 
+    private static final String DAANSE_PROBE_CATALOG_DIR = "daanse.probe.catalog.dir";
+
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
-    private static final String CONFIG_IDENT = "probeBox";
+    private static final String CONFIG_IDENT = "probe";
     private static final String TARGET_EXT = ".target";
-    private static final String PATH_TO_OBSERVE = "./catalogs";
-    private static final String CATALOG_PATH = Paths.get(PATH_TO_OBSERVE).toAbsolutePath().normalize().toString();
 
     private static final String PID_MS_SOAP_MSG_SAAJ = "org.eclipse.daanse.xmla.server.jakarta.saaj.XmlaServlet";
     private static final String PID_XMLA_SERVICE = "org.eclipse.daanse.olap.xmla.bridge.ContextGroupXmlaService";
@@ -58,22 +57,24 @@ public class Probe {
 
     @Activate
     public void activate() throws IOException {
-        logger.info("Activating ProbeBoxSetup");
+        logger.info("Activating ProbeSetup");
 
         initXmlaEndPoint();
         initXmlaService();
         initFileListener();
         initContextGroup();
 
-        logger.info("ProbeBoxSetup activation completed");
+        logger.info("ProbeSetup activation completed");
     }
 
     private void initFileListener() throws IOException {
 
+        String catalogPath = System.getProperty(DAANSE_PROBE_CATALOG_DIR, "./catalogs");
+
         confDataSource = ca.getFactoryConfiguration(ProbeFileListener.PID, CONFIG_IDENT, "?");
 
         Dictionary<String, Object> propsDS = new Hashtable<>();
-        propsDS.put(FileSystemWatcherWhiteboardConstants.FILESYSTEM_WATCHER_PATH, CATALOG_PATH);
+        propsDS.put(FileSystemWatcherWhiteboardConstants.FILESYSTEM_WATCHER_PATH, catalogPath);
 
         confDataSource.update(propsDS);
     }
@@ -112,7 +113,7 @@ public class Probe {
 
     @Deactivate
     public void deactivate() throws IOException {
-        logger.info("Deactivating ProbeBoxSetup");
+        logger.info("Deactivating ProbeSetup");
 
         if (configXmlaEndpoint != null) {
             configXmlaEndpoint.delete();
@@ -121,7 +122,7 @@ public class Probe {
             confSoapLoggingHandler.delete();
         }
 
-        logger.info("ProbeBoxSetup deactivation completed");
+        logger.info("ProbeSetup deactivation completed");
     }
 
 }
