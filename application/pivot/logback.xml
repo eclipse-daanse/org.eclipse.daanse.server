@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/*********************************************************************
+* Copyright (c) 2024 Contributors to the Eclipse Foundation.
+*
+* This program and the accompanying materials are made
+* available under the terms of the Eclipse Public License 2.0
+* which is available at https://www.eclipse.org/legal/epl-2.0/
+*
+* SPDX-License-Identifier: EPL-2.0
+**********************************************************************/
+-->
+<configuration>
+
+  <import
+    class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+  <contextListener class="LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+  <appender name="STDOUT"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ROLL_FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/log.log</file>
+    <rollingPolicy
+      class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>log/log.log-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <!-- each archived file's size will be max 10MB -->
+      <maxFileSize>10MB</maxFileSize>
+      <!-- 30 days to keep -->
+      <maxHistory>30</maxHistory>
+      <!-- total size of all archive files, if total size > 100MB, it will
+      delete old archived file -->
+      <totalSizeCap>100MB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="WARNING">
+<!--    <appender-ref ref="STDOUT" />-->
+    <appender-ref ref="ROLL_FILE" />
+  </root>
+</configuration>
