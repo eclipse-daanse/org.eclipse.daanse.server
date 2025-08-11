@@ -57,13 +57,6 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/catalogs</directory>
-      <outputDirectory>catalogs</outputDirectory>
-      <includes>
-        <include>**/*</include>
-      </includes>
-    </fileSet>
-    <fileSet>
       <directory>${project.basedir}/load</directory>
       <outputDirectory>catalogs</outputDirectory>
       <includes>
