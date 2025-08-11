@@ -22,8 +22,6 @@ import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_PID;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DATA_SOURCE;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY;
-import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_EXPRESSION_COMPILER_FACTORY;
-import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_MDX_PARSER_PROVIDER;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -64,9 +62,6 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
     static final String KEY_FILE_CONTEXT_MATCHER = "file.context.matcher";
 
-    public static final String PID_PARSER = "org.eclipse.daanse.mdx.parser.ccc.MdxParserProviderImpl";
-
-    public static final String PID_EXP_COMP_FAC = "org.eclipse.daanse.olap.calc.base.compiler.BaseExpressionCompilerFactory";
     private static final String TARGET_EXT = ".target";
 
     @Reference
@@ -181,11 +176,8 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
         Dictionary<String, Object> props = new Hashtable<>();
         props.put(BASIC_CONTEXT_REF_NAME_DATA_SOURCE + TARGET_EXT, filterOfMatcherKey(matcherKey));
-        props.put(BASIC_CONTEXT_REF_NAME_EXPRESSION_COMPILER_FACTORY + TARGET_EXT,
-                "(component.name=" + PID_EXP_COMP_FAC + ")");
         props.put(BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY + TARGET_EXT, "(org.eclipse.daanse.dialect.name=H2)");
         props.put(BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER + TARGET_EXT, filterOfMatcherKey(matcherKey));
-        props.put(BASIC_CONTEXT_REF_NAME_MDX_PARSER_PROVIDER + TARGET_EXT, "(component.name=" + PID_PARSER + ")");
 
         String catalog_path = path.toString();
         String theDescription = "theDescription for " + catalog_path;

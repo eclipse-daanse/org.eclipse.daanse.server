@@ -1,4 +1,4 @@
 log/*
 !log/.keep
-catalogs/*
-!catalogs/.keep
+catalog/*
+!catalog/.keep

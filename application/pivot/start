@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Path to Java-Binary
+JAVA_EXEC="java"
+
+# Logback-Konfiguration
+LOGBACK_CONFIG="./logback.xml"
+
+# Check if java -version returns output successfully
+if ! "$JAVA_EXEC" -version >/dev/null 2>&1; then
+  echo "Java is installed but not working properly (java -version failed)."
+  exit 1
+fi
+
+
+if [[ ! -f "$LOGBACK_CONFIG" ]]; then
+  echo "Logback-Configuration-File $LOGBACK_CONFIG not found."
+  exit 1
+fi
+
+# start Server
+echo "start Server"
+"$JAVA_EXEC" -Dlogback.configurationFile=file:"$LOGBACK_CONFIG" -jar daanse.pivot.jar
+
