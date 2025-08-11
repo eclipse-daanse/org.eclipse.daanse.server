@@ -24,6 +24,8 @@
   <artifactId>org.eclipse.daanse.server</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
+  <name>Eclipse Daanse Server Applications</name>
+  <description>Complete server application suite for business intelligence and analytical processing including pivot analysis, playground environments, and system monitoring applications. Provides ready-to-deploy server configurations and application runtime environments for the Daanse platform.</description>
 
   <properties>
     <revision>0.0.1-SNAPSHOT</revision>

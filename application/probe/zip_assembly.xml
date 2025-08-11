@@ -1,0 +1,55 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 https://maven.apache.org/xsd/assembly-2.1.0.xsd">
+  <id>bundle</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+
+  <files>
+    <file>
+      <source>${project.build.directory}/daanse.probe.jar</source>
+      <outputDirectory>/</outputDirectory>
+    </file>
+
+    <file>
+      <source>${project.basedir}/start.bat</source>
+      <outputDirectory>/</outputDirectory>
+    </file>
+
+    <file>
+      <source>${project.basedir}/start</source>
+      <outputDirectory>/</outputDirectory>
+    </file>
+
+    <file>
+      <source>${project.basedir}/logback.xml</source>
+      <outputDirectory>/</outputDirectory>
+    </file>
+
+  </files>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}/catalog</directory>
+      <outputDirectory>catalogs</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/log</directory>
+      <outputDirectory>log</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/catalogs</directory>
+      <outputDirectory>catalogs</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</assembly>
