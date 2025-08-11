@@ -51,7 +51,6 @@
 	bnd.identity;id='org.apache.felix.webconsole',\
 	bnd.identity;id='org.apache.commons.commons-fileupload',\
 	bnd.identity;id='org.owasp.encoder',\
-	bnd.identity;id='org.eclipse.daanse.server.application.probe',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.h2',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.h2',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.mysql',\
@@ -133,7 +132,6 @@
 	org.eclipse.daanse.rolap.mapping.emf;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.pojo;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.server.application.playground;version='[0.0.1,0.0.2)',\
-	org.eclipse.daanse.server.application.probe;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.api;version='[0.0.1,0.0.2)',\
