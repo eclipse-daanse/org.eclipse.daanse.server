@@ -47,5 +47,7 @@ header:
     - '**/logback-test.xml'
     - '**/*.svg'
     - '**/*.mdx'
+    - 'application/probe/start'
+    - 'application/probe/start.bat'
 
   comment: always
