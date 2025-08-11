@@ -49,5 +49,9 @@ header:
     - '**/*.mdx'
     - 'application/probe/start'
     - 'application/probe/start.bat'
+    - 'application/pivot/start'
+    - 'application/pivot/start.bat'
+    - 'application/playground/start'
+    - 'application/playground/start.bat'
 
   comment: always

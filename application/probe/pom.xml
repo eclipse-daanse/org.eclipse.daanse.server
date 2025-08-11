@@ -55,7 +55,6 @@
         <version>3.7.1</version>
         <configuration>
           <descriptors>
-            <!-- eigenes Assembly-Deskriptor-File -->
             <descriptor>zip_assembly.xml</descriptor>
           </descriptors>
         </configuration>

@@ -21,7 +21,7 @@
 
   <files>
     <file>
-      <source>${project.build.directory}/daanse.probe.jar</source>
+      <source>${project.build.directory}/daanse.playground.jar</source>
       <outputDirectory>/</outputDirectory>
     </file>
 

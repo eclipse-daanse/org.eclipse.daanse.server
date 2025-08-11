@@ -43,8 +43,8 @@ public class Probe {
     private static final String TARGET_EXT = ".target";
 
     private static final String PID_MS_SOAP_MSG_SAAJ = "daanse.xmla.server.jakarta.saaj.XmlaServlet";
-    private static final String PID_XMLA_SERVICE = "org.eclipse.daanse.olap.xmla.bridge.ContextGroupXmlaService";
-    private static final String PID_CONTEXT_GROUP = "org.eclipse.daanse.olap.core.BasicContextGroup";
+    private static final String PID_XMLA_SERVICE = "daanse.olap.xmla.bridge.ContextGroupXmlaService";
+    private static final String PID_CONTEXT_GROUP = "daanse.olap.core.BasicContextGroup";
 
     @Reference
     ConfigurationAdmin ca;
@@ -69,7 +69,7 @@ public class Probe {
 
     private void initFileListener() throws IOException {
 
-        String catalogPath = System.getProperty(DAANSE_PROBE_CATALOG_DIR, "./catalogs");
+        String catalogPath = System.getProperty(DAANSE_PROBE_CATALOG_DIR, "./catalog");
 
         confDataSource = ca.getFactoryConfiguration(ProbeFileListener.PID, CONFIG_IDENT, "?");
 
