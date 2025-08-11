@@ -44,7 +44,7 @@
     </encoder>
   </appender>
 
-  <root level="TRACE">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="ROLL_FILE" />
   </root>
