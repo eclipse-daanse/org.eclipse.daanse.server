@@ -1,27 +1,28 @@
 @echo off
 setlocal
 
-REM path to Java-Binary
-set JAVA_EXEC=.\java\bin\java.exe
+REM Path to Java-Binary
+set "JAVA_EXEC=java"
 
 REM Logback-Configuration-File
-set LOGBACK_CONFIG=.\logback.xml
+set "LOGBACK_CONFIG=.\logback.xml"
 
-REM Check, that Java-Binary exists
-if not exist "%JAVA_EXEC%" (
-    echo Java-Binary %JAVA_EXEC% not found.
+
+REM Check if java -version works
+"%JAVA_EXEC%" -version >nul 2>&1
+if errorlevel 1 (
+    echo Java is installed but not working properly (java -version failed).
     exit /b 1
 )
 
-REM Check, that Logback-Configuration esists
+REM Check Logback configuration file exists
 if not exist "%LOGBACK_CONFIG%" (
-    echo Logback-Configuration %LOGBACK_CONFIG% not found.
+    echo Logback configuration file "%LOGBACK_CONFIG%" not found.
     exit /b 1
 )
 
-REM start Server
-echo Starte Server
+REM Start Server
+echo Starting server...
 "%JAVA_EXEC%" -Dlogback.configurationFile=file:"%LOGBACK_CONFIG%" -jar daanse.probe.jar
 
 endlocal
-
