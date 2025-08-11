@@ -43,7 +43,7 @@ public class CatalogXmiFileListener implements FileSystemWatcherListener {
 
     private static final Logger logger = LoggerFactory.getLogger(CatalogXmiFileListener.class);
 
-    public static final String PID = "org.eclipse.daanse.server.application.probe.MappingFileListener";
+    public static final String PID = "daanse.server.application.probe.CatalogXmiFileListener";
 
     @Reference
     private ConfigurationAdmin ca;

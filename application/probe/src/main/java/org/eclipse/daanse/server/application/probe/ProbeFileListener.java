@@ -60,7 +60,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
     private static final Logger logger = LoggerFactory.getLogger(ProbeFileListener.class);
 
-    static final String PID = "org.eclipse.daanse.server.application.probe.CatalogsFileListener";
+    static final String PID = "daanse.server.application.probe.ProbeFileListener";
 
     static final String KEY_FILE_CONTEXT_MATCHER = "file.context.matcher";
 

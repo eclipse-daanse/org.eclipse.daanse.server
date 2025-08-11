@@ -18,7 +18,7 @@
     org.slf4j.simpleLogger.defaultLogLevel=error,\
 	org.osgi.service.http.port=8090,\
     logback.configurationFile=${.}/logback.xml,\
-    daanse.probe.catalog.dir=${.}/catalog
+    daanse.probe.catalog.dir=${.}/catalogs
 
 -runpath: \
 	ch.qos.logback.classic,\
