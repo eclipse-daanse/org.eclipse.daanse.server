@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Path to Java-Binary
+JAVA_EXEC="./java/bin/java"
+
+# Logback-Konfiguration
+LOGBACK_CONFIG="./logback.xml"
+
+# Check Java
+if [[ ! -x "$JAVA_EXEC" ]]; then
+  echo "Java-Binary $JAVA_EXEC not found."
+  exit 1
+fi
+
+
+if [[ ! -f "$LOGBACK_CONFIG" ]]; then
+  echo "Logback-Configuration-File $LOGBACK_CONFIG not found."
+  exit 1
+fi
+
+# start Server
+echo "start Server"
+"$JAVA_EXEC" -Dlogback.configurationFile=file:"$LOGBACK_CONFIG" -jar database-probe.jar
+
+
