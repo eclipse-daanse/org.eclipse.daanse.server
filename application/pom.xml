@@ -144,7 +144,6 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.http.jetty12</artifactId>
       <version>1.0.36</version>
-      <classifier>light</classifier>
       <scope>runtime</scope>
     </dependency>
 

@@ -49,7 +49,6 @@
 	bnd.identity;id='org.eclipse.daanse.rolap.core',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.postgresql',\
 	bnd.identity;id='org.apache.felix.webconsole',\
-	bnd.identity;id='org.apache.commons.commons-fileupload',\
 	bnd.identity;id='org.owasp.encoder',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.h2',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.h2',\
@@ -63,7 +62,9 @@
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.mssqlserver',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.mariadb',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.sqlite',\
-	bnd.identity;id='org.apache.felix.fileinstall'
+	bnd.identity;id='org.apache.felix.fileinstall',\
+	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.jetty',\
+	bnd.identity;id='org.apache.commons.commons-fileupload'
 
 
 # This will help us keep -runbundles sorted
@@ -89,7 +90,7 @@
 	org.apache.commons.commons-io;version='[2.11.0,2.11.1)',\
 	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
 	org.apache.felix.fileinstall;version='[3.7.4,3.7.5)',\
-	org.apache.felix.http.jetty12.light;version='[1.0.36,1.0.37)',\
+	org.apache.felix.http.jetty12;version='[1.0.36,1.0.37)',\
 	org.apache.felix.http.servlet-api;version='[3.0.0,3.0.1)',\
 	org.apache.felix.inventory;version='[2.0.0,2.0.1)',\
 	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
@@ -97,6 +98,7 @@
 	org.apache.felix.webconsole;version='[5.0.12,5.0.13)',\
 	org.eclipse.daanse.io.fs.watcher.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.io.fs.watcher.watchservice;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jakarta.servlet.filter.jetty;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jakarta.servlet.soap;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.datasource.common;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.datasource.h2;version='[0.0.1,0.0.2)',\
@@ -141,18 +143,7 @@
 	org.eclipse.emf.common;version='[2.30.0,2.30.1)',\
 	org.eclipse.emf.ecore;version='[2.36.0,2.36.1)',\
 	org.eclipse.emf.ecore.xmi;version='[2.37.0,2.37.1)',\
-	org.eclipse.jetty.alpn.server;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.ee10.servlet;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.http;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.http2.common;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.http2.hpack;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.http2.server;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.io;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.jmx;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.security;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.server;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.session;version='[12.0.23,12.0.24)',\
-	org.eclipse.jetty.util;version='[12.0.23,12.0.24)',\
+	org.eclipse.jetty.ee10.servlets;version='[12.0.10,12.0.11)',\
 	org.gecko.emf.osgi.component;version='[6.2.0,6.2.1)',\
 	org.glassfish.hk2.osgi-resource-locator;version='[2.5.0,2.5.1)',\
 	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
