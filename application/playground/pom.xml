@@ -342,7 +342,7 @@
 
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.servlet.filter.jetty</artifactId>
+      <artifactId>org.eclipse.daanse.jakarta.servlet.filter.cors</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
