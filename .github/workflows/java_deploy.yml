@@ -12,6 +12,7 @@ jobs:
 
 
   docker_build:
+    needs: publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
