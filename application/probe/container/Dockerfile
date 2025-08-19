@@ -21,11 +21,11 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 
 # Copy application files
-COPY --chown=appuser:appgroup ../target/daanse.probe.jar /app/
-COPY --chown=appuser:appgroup ../start /app/
-COPY --chown=appuser:appgroup ../logback.xml /app/
-COPY --chown=appuser:appgroup ../catalog/ /app/catalog/
-COPY --chown=appuser:appgroup ../log/ /app/log/
+COPY --chown=appuser:appgroup application/probe/target/daanse.probe.jar /app/
+COPY --chown=appuser:appgroup application/probe/start /app/
+COPY --chown=appuser:appgroup application/probe/logback.xml /app/
+COPY --chown=appuser:appgroup application/probe/catalog/ /app/catalog/
+COPY --chown=appuser:appgroup application/probe/log/ /app/log/
 
 # Make start script executable
 RUN chmod +x /app/start
