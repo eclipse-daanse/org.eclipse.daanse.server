@@ -16,7 +16,7 @@
 
 -runproperties: \
     org.slf4j.simpleLogger.defaultLogLevel=error,\
-	org.osgi.service.http.port=8090,\
+	org.osgi.service.http.port=8080,\
     logback.configurationFile=./logback.xml
 
 -runpath: \
