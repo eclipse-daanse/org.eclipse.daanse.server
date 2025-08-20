@@ -1,15 +1,26 @@
-name: Container deploy
+name: Build, Test and Deploy
 
 on:
-  workflow_run:
-    workflows: ["Java Build, Test"]
-    types:
-      - completed
-
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
-  docker_build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build_test:
+    uses: eclipse-daanse/.github/.github/workflows/reuse_java_build_test.yml@main
+
+  maven_deploy:
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    needs: build_test
+    uses: eclipse-daanse/.github/.github/workflows/reuse_java_deploy.yml@main
+    secrets: inherit
+
+  container_deploy:
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    needs: build_test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,7 +35,6 @@ jobs:
         with:
           name: jar-files
           path: .
-          run-id: ${{ github.event.workflow_run.id }}
 
       - name: Update dockerhub repo description
         uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
@@ -67,5 +77,3 @@ jobs:
             docker.io/eclipsedaanse/probe:${{ github.sha }}
             ghcr.io/eclipse-daanse/probe:snapshot
             ghcr.io/eclipse-daanse/probe:${{ github.sha }}
-
-
