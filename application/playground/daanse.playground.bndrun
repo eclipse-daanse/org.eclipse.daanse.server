@@ -67,7 +67,9 @@
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.opensearch',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.opensearch',\
 	bnd.identity;id='org.eclipse.daanse.webconsole.branding',\
-	bnd.identity;id='org.apache.felix.configadmin.plugin.interpolation'
+	bnd.identity;id='org.apache.felix.configadmin.plugin.interpolation',\
+	bnd.identity;id='org.eclipse.daanse.lcid.basic',\
+	bnd.identity;id='org.eclipse.daanse.lcid.cfg'
 
 
 # This will help us keep -runbundles sorted
@@ -129,6 +131,9 @@
 	org.eclipse.daanse.jdbc.db.dialect.db.postgresql;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.db.dialect.db.sqlite;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.db.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.basic;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.cfg;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.model.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.model.record;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.parser.api;version='[0.0.1,0.0.2)',\

@@ -48,7 +48,8 @@
 	bnd.identity;id='org.eclipse.daanse.sql.guard.api',\
 	bnd.identity;id='org.eclipse.daanse.sql.guard.jsqltranspiler',\
 	bnd.identity;id='org.eclipse.daanse.rolap.core',\
-	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.cors'
+	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.cors',\
+	bnd.identity;id='org.eclipse.daanse.lcid.basic'
 
 
 # This will help us keep -runbundles sorted
@@ -86,6 +87,8 @@
 	org.eclipse.daanse.jdbc.db.dialect.db.h2;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.db.importer.csv;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jdbc.db.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.basic;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.model.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.model.record;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.mdx.parser.api;version='[0.0.1,0.0.2)',\
