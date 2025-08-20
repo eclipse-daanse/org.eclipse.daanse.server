@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5.0.0
 
       - name: Download probe artifacts
-        uses: actions/download-artifact@6d3737bb1e3e7c7b3dd21b3b7c8b5c6c8e4a3b2a #v4.1.8
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: jar-files
           path: .
