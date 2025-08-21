@@ -74,6 +74,6 @@ jobs:
           push: true
           tags: |
             docker.io/eclipsedaanse/probe:snapshot
-            docker.io/eclipsedaanse/probe:${{ github.sha }}
             ghcr.io/eclipse-daanse/probe:snapshot
-            ghcr.io/eclipse-daanse/probe:${{ github.sha }}
+#            docker.io/eclipsedaanse/probe:${{ github.sha }}
+#            ghcr.io/eclipse-daanse/probe:${{ github.sha }}
