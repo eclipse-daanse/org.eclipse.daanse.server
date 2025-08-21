@@ -12,7 +12,7 @@
 #   Stefan Bischof (bipolis.org) - initial
 #*******************************************************************************
 
-FROM eclipse-temurin:24-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # Create non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
