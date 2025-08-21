@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # Path to Java-Binary
 JAVA_EXEC="java"

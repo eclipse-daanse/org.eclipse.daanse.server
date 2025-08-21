@@ -37,4 +37,4 @@ USER appuser
 EXPOSE 8080
 
 # Use shell script as entrypoint
-ENTRYPOINT ["/app/start"]
+ENTRYPOINT ["sh","/app/start"]
