@@ -14,8 +14,14 @@
 
 FROM eclipse-temurin:21-jre-alpine
 
+
+# Set UID/GID → less Problems with Bind-Mounts (Podman rootless)
+ARG APP_UID=1000
+ARG APP_GID=1000
+
 # Create non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -S -g ${APP_GID} appgroup \
+ && adduser  -S -u ${APP_UID} -G appgroup appuser
 
 # Set working directory
 WORKDIR /app
@@ -37,4 +43,4 @@ USER appuser
 EXPOSE 8080
 
 # Use shell script as entrypoint
-ENTRYPOINT ["sh","/app/start"]
+ENTRYPOINT ["sh","-c","exec /app/start"]
