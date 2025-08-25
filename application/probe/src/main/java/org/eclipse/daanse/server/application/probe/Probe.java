@@ -148,6 +148,9 @@ public class Probe {
         if (configRoleAuthFilter != null) {
             configRoleAuthFilter.delete();
         }
+        if (configCorsFilter != null) {
+            configCorsFilter.delete();
+        }
         if (confSoapLoggingHandler != null) {
             confSoapLoggingHandler.delete();
         }
