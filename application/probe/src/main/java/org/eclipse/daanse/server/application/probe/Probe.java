@@ -109,7 +109,8 @@ public class Probe {
 
         configRoleAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
-        dict.put("osgi.http.whiteboard.servlet.context.select", "(osgi.http.whiteboard.context.name=defaut)");
+
+        dict.put("osgi.http.whiteboard.filter.pattern", "/*");
         configRoleAuthFilter.update(dict);
 
     }
@@ -119,7 +120,8 @@ public class Probe {
         configCorsFilter = ca.getFactoryConfiguration(
                 org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PID_FILTER_CORS, CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
-        dict.put("osgi.http.whiteboard.servlet.context.select", "(osgi.http.whiteboard.context.name=defaut)");
+
+        dict.put("osgi.http.whiteboard.filter.pattern", "/*");
         dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOW_CREDENTIALS_PARAM, true);
         dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOWED_ORIGINS_PARAM, "*");
         configCorsFilter.update(dict);
