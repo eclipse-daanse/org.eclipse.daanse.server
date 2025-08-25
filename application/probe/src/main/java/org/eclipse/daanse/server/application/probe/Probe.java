@@ -18,6 +18,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.daanse.io.fs.watcher.api.FileSystemWatcherWhiteboardConstants;
+import org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role.BasicAuthPipeRoleFilter;
 import org.eclipse.daanse.olap.core.api.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -54,12 +55,17 @@ public class Probe {
     private Configuration confContextGroupXmlaService;
     private Configuration confDataSource;
     private Configuration confContextGroup;
+    private Configuration configRoleAuthFilter;
+
+    private Configuration configCorsFilter;
 
     @Activate
     public void activate() throws IOException {
         logger.info("Activating ProbeSetup");
 
         initXmlaEndPoint();
+        initRoleAuthFilter();
+        initCorsFilter();
         initXmlaService();
         initFileListener();
         initContextGroup();
@@ -99,6 +105,27 @@ public class Probe {
         confContextGroupXmlaService.update(dict);
     }
 
+    private void initRoleAuthFilter() throws IOException {
+
+        configRoleAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put("osgi.http.whiteboard.servlet.context.select", "(osgi.http.whiteboard.context.name=defaut)");
+        configRoleAuthFilter.update(dict);
+
+    }
+
+    private void initCorsFilter() throws IOException {
+
+        configCorsFilter = ca.getFactoryConfiguration(
+                org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PID_FILTER_CORS, CONFIG_IDENT, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put("osgi.http.whiteboard.servlet.context.select", "(osgi.http.whiteboard.context.name=defaut)");
+        dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOW_CREDENTIALS_PARAM, true);
+        dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOWED_ORIGINS_PARAM, "*");
+        configCorsFilter.update(dict);
+
+    }
+
     private void initXmlaEndPoint() throws IOException {
 
         configXmlaEndpoint = ca.getFactoryConfiguration(PID_MS_SOAP_MSG_SAAJ, CONFIG_IDENT, "?");
@@ -117,6 +144,9 @@ public class Probe {
 
         if (configXmlaEndpoint != null) {
             configXmlaEndpoint.delete();
+        }
+        if (configRoleAuthFilter != null) {
+            configRoleAuthFilter.delete();
         }
         if (confSoapLoggingHandler != null) {
             confSoapLoggingHandler.delete();
