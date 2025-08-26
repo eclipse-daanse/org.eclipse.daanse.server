@@ -25,6 +25,7 @@
 	slf4j.api
 
 -runee: JavaSE-21
+
 -runfw: org.apache.felix.framework
 
 -runrequires: \
