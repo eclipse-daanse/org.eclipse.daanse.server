@@ -2,7 +2,7 @@
 title: Pivot
 group: Applications
 ---
-# Eclipse Daanse Pivor Application
+# Eclipse Daanse Pivot Application
 
 **Status: Under Construction**
 

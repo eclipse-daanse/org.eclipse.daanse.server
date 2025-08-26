@@ -1,6 +1,6 @@
 ---
-title: Probe Application
-group: Application
+title: Probe
+group: Applications
 ---
 # Eclipse Daanse Probe Application
 
