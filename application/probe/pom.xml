@@ -109,6 +109,13 @@
 
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.rolap.documentation.common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
       <artifactId>
         org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role</artifactId>
       <version>0.0.1-SNAPSHOT</version>
@@ -120,7 +127,6 @@
       <artifactId>slf4j-api</artifactId>
       <scope>compile</scope>
     </dependency>
-
 
   </dependencies>
 </project>

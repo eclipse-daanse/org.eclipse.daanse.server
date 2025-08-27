@@ -82,30 +82,20 @@ Use containers for production deployments, isolated environments, and easy distr
 ```bash
 # Docker
 docker run --name probe \
-  -v ~/temp/probe:/app/catalog/:ro,Z \
+  -v ~/temp/probe/catalog:/app/catalog/:ro,Z \
+  -v ~/temp/probe/output:/app/output/,Z \
   -p 8095:8080 \
   -d eclipsedaanse/probe:snapshot
 ```
 
-#### Container Parameters Explained
+##### Container Parameters Explained
 
 - `--name probe`: Container name
-- `-v ~/temp/probe:/app/catalog/:ro,Z`: Mount local catalog directory (read-only with SELinux context)
+- `-v ~/temp/probe/catalog:/app/catalog/:ro,Z`: Mount local catalog directory (read-only with SELinux context)
+- `-v ~/temp/probe/output:/app/output/,Z` mount the output folder e.g. for documnetation
 - `-p 8095:8080`: Map host port 8095 to container port 8080
 - `-d`: Run in detached mode
 - `eclipsedaanse/probe:snapshot`: Container image
-
-#### Direct Container Commands
-
-**Basic Usage:**
-
-```bash
-# Run with custom catalog and log persistence
-docker run --name probe-dev \
-  -v $(pwd)/custom-catalogs:/app/catalog/:ro,Z \
-  -p 8095:8080 \
-  eclipsedaanse/probe:snapshot
-```
 
 
 #### Docker Compose
@@ -126,6 +116,11 @@ services:
         source: ~/temp/probe/catalog
         target: /app/catalog/
         read_only: true
+        bind:
+          selinux: Z
+      - type: bind
+        source: ~/temp/probe/output
+        target: /app/output/
         bind:
           selinux: Z
       - type: bind
@@ -158,6 +153,7 @@ docker-compose -f compose/docker-compose.yml up -d
 ├── catalog/                 # Data catalogs and mappings
 │   ├── */data/             # CSV data files
 │   └── */mapping/          # XMI catalog definitions
+├── output/                 # Output folder e.g.documentation
 └── log/                    # Application logs
 ```
 
@@ -327,13 +323,11 @@ To create your own catalog:
 - **File Deletions**: Remove catalogs or data files
 
 
-
 #### Development Workflow
 1. **Mount catalog directory** with write access (remove `:ro` flag for development):
    ```bash
    # Docker/Podman - Development mode
-   podman run -v ~/temp/probe/catalog:/app/catalog/:Z -p 8095:8080 eclipsedaanse/probe:snapshot
-   docker run -v ~/temp/probe/catalog:/app/catalog/:Z -p 8095:8080 eclipsedaanse/probe:snapshot
+   podman run -v ~/temp/probe/catalog:/app/catalog/:Z -v ~/temp/probe/output:/app/output/:Z -p 8095:8080 eclipsedaanse/probe:snapshot
    ```
 
 2. **Edit catalogs** using any text editor or IDE
@@ -346,7 +340,9 @@ To create your own catalog:
    # Watch for catalog reload messages
    ```
 
-4. **Test changes immediately** - no restart needed
+4. **Verify Documentation** - verify the docs in `output/documentation` folder
+
+5. **Test changes immediately** - no restart needed
 
 
 ### Best Practices

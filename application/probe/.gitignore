@@ -2,3 +2,5 @@ log/*
 !log/.keep
 catalog/*
 !catalog/.keep
+output/*
+!output/.keep
