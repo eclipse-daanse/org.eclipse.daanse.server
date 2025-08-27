@@ -51,7 +51,8 @@
 	bnd.identity;id='org.eclipse.daanse.rolap.core',\
 	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.cors',\
 	bnd.identity;id='org.eclipse.daanse.lcid.basic',\
-	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role'
+	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role',\
+	bnd.identity;id='org.eclipse.daanse.rolap.documentation.common'
 
 
 # This will help us keep -runbundles sorted
@@ -102,9 +103,12 @@
 	org.eclipse.daanse.olap.spi;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.xmla.bridge;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.documentation.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.documentation.common;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.emf;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.pojo;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.verifyer.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.server.application.probe;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\

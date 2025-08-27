@@ -57,6 +57,9 @@ public class Probe {
     private Configuration confContextGroup;
     private Configuration configRoleAuthFilter;
 
+    private Configuration configDocumenterMarkdown;
+    private Configuration configAutoDocumenter;
+
     private Configuration configCorsFilter;
 
     @Activate
@@ -69,6 +72,7 @@ public class Probe {
         initXmlaService();
         initFileListener();
         initContextGroup();
+        initDocumenter();
 
         logger.info("ProbeSetup activation completed");
     }
@@ -140,6 +144,21 @@ public class Probe {
 
     }
 
+    private void initDocumenter() throws IOException {
+
+        configDocumenterMarkdown = ca.getFactoryConfiguration(
+                org.eclipse.daanse.rolap.documentation.common.api.Constants.DOC_PROVIDER_MARKDOWN_PID, CONFIG_IDENT,
+                "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        configDocumenterMarkdown.update(dict);
+
+        configAutoDocumenter = ca.getFactoryConfiguration(
+                org.eclipse.daanse.rolap.documentation.common.api.Constants.AUTO_DOCUMENTER_PID, CONFIG_IDENT, "?");
+        dict = new Hashtable<>();
+        configAutoDocumenter.update(dict);
+
+    }
+
     @Deactivate
     public void deactivate() throws IOException {
         logger.info("Deactivating ProbeSetup");
@@ -155,6 +174,14 @@ public class Probe {
         }
         if (confSoapLoggingHandler != null) {
             confSoapLoggingHandler.delete();
+        }
+
+        if (configDocumenterMarkdown != null) {
+            configDocumenterMarkdown.delete();
+        }
+
+        if (configAutoDocumenter != null) {
+            configAutoDocumenter.delete();
         }
 
         logger.info("ProbeSetup deactivation completed");

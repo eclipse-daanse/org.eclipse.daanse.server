@@ -31,6 +31,7 @@ COPY --chown=appuser:appgroup application/probe/target/daanse.probe.jar /app/
 COPY --chown=appuser:appgroup application/probe/start /app/
 COPY --chown=appuser:appgroup application/probe/logback.xml /app/
 COPY --chown=appuser:appgroup application/probe/catalog/ /app/catalog/
+COPY --chown=appuser:appgroup application/probe/output/ /app/output/
 COPY --chown=appuser:appgroup application/probe/log/ /app/log/
 
 # Make start script executable
