@@ -139,13 +139,13 @@ networks:
 ```
 
 **Start services**
-```
+```text
 docker-compose -f compose/docker-compose.yml up -d
 ```
 
 ## Directory Structure
 
-```
+```text
 /app/
 ├── daanse.probe.jar          # Main application JAR
 ├── start                     # Startup script
@@ -165,7 +165,7 @@ The `/app/catalog/` directory is the core of the Eclipse Daanse Probe system. It
 
 Each catalog is organized in its own subdirectory with the following structure:
 
-```
+```text
 catalog/
 ├── my-catalog/                    # Catalog name (directory)
 │   ├── mapping/
@@ -220,7 +220,7 @@ VARCHAR,INTEGER,DECIMAL           # Line 2: Data types
 Here's a complete example of the `tutorial.cube.minimal` catalog:
 
 #### Directory Structure
-```
+```text
 tutorial.cube.minimal/
 ├── mapping/
 │   └── catalog.xmi
@@ -278,7 +278,7 @@ This creates:
 
 For catalogs with multiple schemas like `tutorial.database.schema`:
 
-```
+```text
 tutorial.database.schema/
 ├── mapping/
 │   └── catalog.xmi
@@ -408,21 +408,21 @@ For testing catalog security and access control, you can specify **roles directl
 #### Examples
 
 1. **Basic User**:
-   ```
+   ```text
    Username: demo
    Password: (empty)
    Result: Default access rights
    ```
 
 2. **Single Role Testing**:
-   ```
+   ```text
    Username: testuser|manager
    Password: (empty)  
    Result: Access with "manager" role permissions
    ```
 
 3. **Multiple Roles Testing**:
-   ```
+   ```text
    Username: admin|sales|finance|reporting
    Password: (empty)
    Result: Combined permissions from all specified roles
