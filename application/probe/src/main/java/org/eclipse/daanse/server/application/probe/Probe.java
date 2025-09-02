@@ -62,6 +62,10 @@ public class Probe {
 
     private Configuration configCorsFilter;
 
+    private Configuration configOdcWriter;
+
+    private Configuration configAutoODC;
+
     @Activate
     public void activate() throws IOException {
         logger.info("Activating ProbeSetup");
@@ -73,6 +77,7 @@ public class Probe {
         initFileListener();
         initContextGroup();
         initDocumenter();
+        initODC();
 
         logger.info("ProbeSetup activation completed");
     }
@@ -159,6 +164,21 @@ public class Probe {
 
     }
 
+    private void initODC() throws IOException {
+        configOdcWriter = ca.getFactoryConfiguration(org.eclipse.daanse.olap.odc.simple.api.Constants.CREATOR_PID,
+                CONFIG_IDENT, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put(org.eclipse.daanse.olap.odc.simple.api.Constants.CREATOR_PROPERTY_DATASOURCE,
+                "http://localhost:8080/xmla");
+        configOdcWriter.update(dict);
+
+        configAutoODC = ca.getFactoryConfiguration(org.eclipse.daanse.olap.odc.simple.api.Constants.AUTO_ODC_PID,
+                CONFIG_IDENT, "?");
+        dict = new Hashtable<>();
+        configAutoODC.update(dict);
+
+    }
+
     @Deactivate
     public void deactivate() throws IOException {
         logger.info("Deactivating ProbeSetup");
@@ -182,6 +202,14 @@ public class Probe {
 
         if (configAutoDocumenter != null) {
             configAutoDocumenter.delete();
+        }
+
+        if (configAutoODC != null) {
+            configAutoODC.delete();
+        }
+
+        if (configOdcWriter != null) {
+            configOdcWriter.delete();
         }
 
         logger.info("ProbeSetup deactivation completed");
