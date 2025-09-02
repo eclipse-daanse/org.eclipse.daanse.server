@@ -52,7 +52,7 @@ Daanse Server Tutorials ships with **80+ tutorial scenarios** covering:
 - KPI and calculated member examples
 - Virtual cubes and writeback functionality
 
-Download the Full [Tutorial Pack](https://github.com/eclipse-daanse/eclipse-daanse.github.io/tree/main/docs/public/cubeserver/tutorial/zip) or Learn in our Tutorials [Online](https://daanse.org/cubeserver/tutorial/)
+Download the Full [Tutorial Pack](https://github.com/eclipse-daanse/eclipse-daanse.github.io/raw/refs/heads/main/docs/public/cubeserver/tutorial/zip/all-tutorials.zip) or Learn in our Tutorials [Online](https://daanse.org/cubeserver/tutorial/)
 
 ## Features
 
