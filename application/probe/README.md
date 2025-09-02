@@ -342,7 +342,7 @@ To create your own catalog:
 
 4. **Verify Documentation** - verify the docs in `output/documentation` folder
 
-5. **Test changes immediately** - no restart needed
+5. **Test changes immediately** - no restart needed, connect via odc file in `output/odc`
 
 
 ### Best Practices
