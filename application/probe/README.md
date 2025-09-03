@@ -82,8 +82,8 @@ Use containers for production deployments, isolated environments, and easy distr
 ```bash
 # Docker
 docker run --name probe \
-  -v ~/temp/probe/catalog:/app/catalog/:ro,Z \
-  -v ~/temp/probe/output:/app/output/,Z \
+  -v ~/temp/probe/catalog:/app/catalog/:rw,Z \
+  -v ~/temp/probe/output:/app/output/:rw,Z \
   -p 8095:8080 \
   -d eclipsedaanse/probe:snapshot
 ```
@@ -91,8 +91,8 @@ docker run --name probe \
 ##### Container Parameters Explained
 
 - `--name probe`: Container name
-- `-v ~/temp/probe/catalog:/app/catalog/:ro,Z`: Mount local catalog directory (read-only with SELinux context)
-- `-v ~/temp/probe/output:/app/output/,Z` mount the output folder e.g. for documnetation
+- `-v ~/temp/probe/catalog:/app/catalog/:rw,Z`: Mount local catalog directory (read-only with SELinux context)
+- `-v ~/temp/probe/output:/app/output/:rw,Z` mount the output folder e.g. for documnetation
 - `-p 8095:8080`: Map host port 8095 to container port 8080
 - `-d`: Run in detached mode
 - `eclipsedaanse/probe:snapshot`: Container image
