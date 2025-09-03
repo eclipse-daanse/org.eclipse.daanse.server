@@ -91,7 +91,7 @@ docker run --name probe \
 ##### Container Parameters Explained
 
 - `--name probe`: Container name
-- `-v ~/temp/probe/catalog:/app/catalog/:rw,Z`: Mount local catalog directory (read-only with SELinux context)
+- `-v ~/temp/probe/catalog:/app/catalog/:rw,Z`: Mount local catalog directory ( read-write with SELinux context)
 - `-v ~/temp/probe/output:/app/output/:rw,Z` mount the output folder e.g. for documnetation
 - `-p 8095:8080`: Map host port 8095 to container port 8080
 - `-d`: Run in detached mode
@@ -115,7 +115,6 @@ services:
       - type: bind
         source: ~/temp/probe/catalog
         target: /app/catalog/
-        read_only: true
         bind:
           selinux: Z
       - type: bind
