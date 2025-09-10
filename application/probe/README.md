@@ -82,10 +82,11 @@ Use containers for production deployments, isolated environments, and easy distr
 ```bash
 # Docker
 docker run --name probe \
+  --userns=keep-id \
   -v ~/temp/probe/catalog:/app/catalog/:rw,Z \
   -v ~/temp/probe/output:/app/output/:rw,Z \
   -p 8095:8080 \
-  -d eclipsedaanse/probe:snapshot
+  -it eclipsedaanse/probe:snapshot
 ```
 
 ##### Container Parameters Explained
