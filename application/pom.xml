@@ -107,9 +107,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.runtime.registrar</artifactId>
-      <version>${revision}</version>
+      <groupId>com.sun.xml.messaging.saaj</groupId>
+      <artifactId>saaj-impl</artifactId>
+      <version>3.0.4</version>
       <scope>runtime</scope>
     </dependency>
 
@@ -150,7 +150,14 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.http.jetty12</artifactId>
-      <version>1.0.36</version>
+      <version>1.1.4</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.6.0</version>
       <scope>runtime</scope>
     </dependency>
 
