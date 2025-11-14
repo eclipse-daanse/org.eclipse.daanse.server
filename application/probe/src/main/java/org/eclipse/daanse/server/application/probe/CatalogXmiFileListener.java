@@ -13,8 +13,8 @@
 */
 package org.eclipse.daanse.server.application.probe;
 
-import static org.eclipse.daanse.rolap.mapping.emf.rolapmapping.provider.Constants.PID_EMF_MAPPING_PROVIDER;
-import static org.eclipse.daanse.rolap.mapping.emf.rolapmapping.provider.Constants.RESOURCE_URL;
+import static org.eclipse.daanse.rolap.mapping.model.provider.Constants.PID_EMF_MAPPING_PROVIDER;
+import static org.eclipse.daanse.rolap.mapping.model.provider.Constants.RESOURCE_URL;
 
 import java.io.IOException;
 import java.nio.file.Path;
