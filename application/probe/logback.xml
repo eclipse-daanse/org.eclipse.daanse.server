@@ -44,7 +44,12 @@
     </encoder>
   </appender>
 
-  <root level="INFO">
+  <logger name="org.eclipse.jetty" level="WARN"/>
+  <logger name="org.eclipse.daanse.jdbc" level="WARN"/>
+  <logger name="org.eclipse.daanse.mdx.parser.ccc" level="WARN"/>
+  <logger name="org.eclipse.daanse.rolap.element" level="WARN"/>
+
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="ROLL_FILE" />
   </root>

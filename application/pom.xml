@@ -130,7 +130,7 @@
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <version>${revision}</version>
-      <artifactId>org.eclipse.daanse.rolap.mapping.emf</artifactId>
+      <artifactId>org.eclipse.daanse.rolap.mapping.model</artifactId>
       <scope>compile</scope>
     </dependency>
 

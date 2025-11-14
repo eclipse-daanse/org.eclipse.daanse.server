@@ -42,8 +42,7 @@
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.core',\
 	bnd.identity;id='org.eclipse.daanse.mdx.parser.api',\
 	bnd.identity;id='org.eclipse.daanse.mdx.parser.ccc',\
-	bnd.identity;id='org.eclipse.daanse.rolap.mapping.api',\
-	bnd.identity;id='org.eclipse.daanse.rolap.mapping.emf',\
+	bnd.identity;id='org.eclipse.daanse.rolap.mapping.model',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.importer.csv',\
 	bnd.identity;id='org.gecko.emf.osgi.component',\
 	bnd.identity;id='org.eclipse.daanse.sql.guard.api',\
@@ -112,9 +111,7 @@
 	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.documentation.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.documentation.common;version='[0.0.1,0.0.2)',\
-	org.eclipse.daanse.rolap.mapping.api;version='[0.0.1,0.0.2)',\
-	org.eclipse.daanse.rolap.mapping.emf;version='[0.0.1,0.0.2)',\
-	org.eclipse.daanse.rolap.mapping.pojo;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.model;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.verifyer.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.server.application.probe;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
