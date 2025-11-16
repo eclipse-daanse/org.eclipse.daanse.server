@@ -53,7 +53,8 @@
 	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role',\
 	bnd.identity;id='org.eclipse.daanse.rolap.documentation.common',\
 	bnd.identity;id='org.eclipse.daanse.olap.odc',\
-	bnd.identity;id='org.apache.felix.http.servlet-api'
+	bnd.identity;id='org.apache.felix.http.servlet-api',\
+	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.noauth'
 
 
 # This will help us keep -runbundles sorted
@@ -82,6 +83,7 @@
 	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
 	org.eclipse.daanse.io.fs.watcher.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.io.fs.watcher.watchservice;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.noauth;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jakarta.servlet.filter.cors;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.jakarta.servlet.soap;version='[0.0.1,0.0.2)',\

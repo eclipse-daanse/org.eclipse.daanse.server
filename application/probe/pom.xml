@@ -125,6 +125,14 @@
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>
+        org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.noauth</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>
         org.eclipse.daanse.olap.odc</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
