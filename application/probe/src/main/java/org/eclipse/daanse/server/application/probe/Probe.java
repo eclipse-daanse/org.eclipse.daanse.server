@@ -18,6 +18,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.daanse.io.fs.watcher.api.FileSystemWatcherWhiteboardConstants;
+import org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.noauth.NoAuthDummyFilter;
 import org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role.BasicAuthPipeRoleFilter;
 import org.eclipse.daanse.olap.core.api.Constants;
 import org.osgi.service.cm.Configuration;
@@ -55,7 +56,7 @@ public class Probe {
     private Configuration confContextGroupXmlaService;
     private Configuration confDataSource;
     private Configuration confContextGroup;
-    private Configuration configRoleAuthFilter;
+    private Configuration configAuthFilter;
 
     private Configuration configDocumenterMarkdown;
     private Configuration configAutoDocumenter;
@@ -116,11 +117,13 @@ public class Probe {
 
     private void initRoleAuthFilter() throws IOException {
 
-        configRoleAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
+        configAuthFilter = ca.getFactoryConfiguration(NoAuthDummyFilter.PID, CONFIG_IDENT, "?");
+
+//        configAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
 
         dict.put("osgi.http.whiteboard.filter.pattern", "/*");
-        configRoleAuthFilter.update(dict);
+        configAuthFilter.update(dict);
 
     }
 
@@ -186,8 +189,8 @@ public class Probe {
         if (configXmlaEndpoint != null) {
             configXmlaEndpoint.delete();
         }
-        if (configRoleAuthFilter != null) {
-            configRoleAuthFilter.delete();
+        if (configAuthFilter != null) {
+            configAuthFilter.delete();
         }
         if (configCorsFilter != null) {
             configCorsFilter.delete();
