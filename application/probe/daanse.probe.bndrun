@@ -24,7 +24,7 @@
 	ch.qos.logback.core,\
 	slf4j.api
 
--runee: JavaSE-21
+-runee: JavaSE-25
 
 -runfw: org.apache.felix.framework
 
@@ -32,7 +32,6 @@
 	bnd.identity;id='${project.artifactId}',\
 	bnd.identity;id='org.glassfish.hk2.osgi-resource-locator',\
 	bnd.identity;id='com.sun.xml.messaging.saaj.impl',\
-	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension',\
 	bnd.identity;id='org.apache.felix.metatype',\
 	bnd.identity;id='org.eclipse.daanse.olap.xmla.bridge',\
 	bnd.identity;id='org.eclipse.daanse.xmla.server.jakarta.saaj',\
@@ -73,7 +72,7 @@
 	jakarta.xml.soap-api;version='[3.0.1,3.0.2)',\
 	json;version='[20250517.0.0,20250517.0.1)',\
 	net.sf.jsqlparser;version='[5.4.0,5.4.1)',\
-	org.apache.aries.spifly.dynamic.framework.extension;version='[1.3.7,1.3.8)',\
+	org.apache.aries.spifly.dynamic.bundle;version='[1.3.7,1.3.8)',\
 	org.apache.commons.commons-fileupload;version='[1.6.0,1.6.1)',\
 	org.apache.commons.commons-io;version='[2.19.0,2.19.1)',\
 	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
@@ -128,6 +127,11 @@
 	org.gecko.emf.osgi.component;version='[6.2.0,6.2.1)',\
 	org.glassfish.hk2.osgi-resource-locator;version='[2.5.0,2.5.1)',\
 	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
+	org.objectweb.asm;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.commons;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree.analysis;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.util;version='[9.9.0,9.9.1)',\
 	org.osgi.service.cm;version='[1.6.1,1.6.2)',\
 	org.osgi.service.component;version='[1.5.1,1.5.2)',\
 	org.osgi.service.log;version='[1.4.0,1.4.1)',\
