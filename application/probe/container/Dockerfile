@@ -12,7 +12,7 @@
 #   Stefan Bischof (bipolis.org) - initial
 #*******************************************************************************
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 
 # Set UID/GID → less Problems with Bind-Mounts (Podman rootless)
