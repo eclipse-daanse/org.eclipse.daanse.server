@@ -24,7 +24,7 @@
 	ch.qos.logback.core,\
 	slf4j.api
 
--runee: JavaSE-21
+-runee: JavaSE-25
 -runfw: org.apache.felix.framework
 
 -runrequires: \
@@ -96,6 +96,11 @@
 	org.gecko.emf.osgi.component;version='[6.2.0,6.2.1)',\
 	org.glassfish.hk2.osgi-resource-locator;version='[2.5.0,2.5.1)',\
 	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
+	org.objectweb.asm;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.commons;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree.analysis;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.util;version='[9.9.0,9.9.1)',\
 	org.osgi.service.cm;version='[1.6.1,1.6.2)',\
 	org.osgi.service.component;version='[1.5.1,1.5.2)',\
 	org.osgi.service.log;version='[1.4.0,1.4.1)',\
