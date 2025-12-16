@@ -145,6 +145,7 @@
 	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.mapping.model;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.server.application.playground;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.deparser.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.webconsole.branding;version='[0.0.1,0.0.2)',\
