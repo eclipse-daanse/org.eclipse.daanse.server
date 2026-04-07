@@ -116,6 +116,7 @@
 	org.eclipse.daanse.olap.format;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.odc;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.spi;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.util.format;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.olap.xmla.bridge;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.rolap.documentation.api;version='[0.0.1,0.0.2)',\
@@ -128,13 +129,17 @@
 	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.csdl.model.v2.an;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.csdl.model.v2.bi;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.csdl.model.v2.cg;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.csdl.model.v2.edm;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.model.record;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.server.adapter.soapmessage;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.server.jakarta.saaj;version='[0.0.1,0.0.2)',\
 	org.eclipse.emf.common;version='[2.44.0,2.44.1)',\
 	org.eclipse.emf.ecore;version='[2.41.0,2.41.1)',\
 	org.eclipse.emf.ecore.xmi;version='[2.39.0,2.39.1)',\
-	org.eclipse.fennec.emf.osgi.component;version='[1.0.0,1.0.1)',\
+	org.eclipse.fennec.emf.osgi.component;version='[0.1.1,0.1.2)',\
 	org.glassfish.hk2.osgi-resource-locator;version='[2.5.0,2.5.1)',\
 	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
 	org.objectweb.asm;version='[9.9.0,9.9.1)',\
