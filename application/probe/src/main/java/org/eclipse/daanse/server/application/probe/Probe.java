@@ -66,6 +66,8 @@ public class Probe {
 
     private Configuration configAutoODC;
 
+    private Configuration configFileReporter;
+
     @Activate
     public void activate() throws IOException {
         logger.info("Activating ProbeSetup");
@@ -78,6 +80,7 @@ public class Probe {
         initContextGroup();
         initDocumenter();
         initODC();
+        initCheckReporter();
 
         logger.info("ProbeSetup activation completed");
     }
@@ -183,6 +186,13 @@ public class Probe {
 
     }
 
+    private void initCheckReporter() throws IOException {
+        configFileReporter = ca.getFactoryConfiguration("daanse.olap.check.reporter.file", CONFIG_IDENT, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put("output.dir", "./output/check-results");
+        configFileReporter.update(dict);
+    }
+
     @Deactivate
     public void deactivate() throws IOException {
         logger.info("Deactivating ProbeSetup");
@@ -214,6 +224,10 @@ public class Probe {
 
         if (configOdcWriter != null) {
             configOdcWriter.delete();
+        }
+
+        if (configFileReporter != null) {
+            configFileReporter.delete();
         }
 
         logger.info("ProbeSetup deactivation completed");
