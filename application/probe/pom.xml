@@ -109,6 +109,41 @@
 
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.olap.check.model.emf</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.olap.check.runtime</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.olap.check.reporter.api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.olap.check.reporter.log</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.olap.check.reporter.file</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.rolap.documentation.common</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>

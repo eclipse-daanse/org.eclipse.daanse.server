@@ -71,6 +71,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
     private Map<Path, Configuration> catalogFolderConfigsCSV = new ConcurrentHashMap<>();
     private Map<Path, Configuration> catalogFolderConfigsContext = new ConcurrentHashMap<>();
     private Map<Path, Configuration> catalogFolderConfigsMapping = new ConcurrentHashMap<>();
+    private Map<Path, Configuration> catalogFolderConfigsCheckSuite = new ConcurrentHashMap<>();
 
     @Override
     public void handleBasePath(Path basePath) {
@@ -127,6 +128,15 @@ public class ProbeFileListener implements FileSystemWatcherListener {
         } catch (IOException e) {
             logger.error("Failed to delete mapping configuration for path: {}", path, e);
         }
+
+        try {
+            Configuration c = catalogFolderConfigsCheckSuite.remove(path);
+            if (c != null) {
+                c.delete();
+            }
+        } catch (IOException e) {
+            logger.error("Failed to delete check suite configuration for path: {}", path, e);
+        }
     }
 
     private void addPath(Path path) {
@@ -143,6 +153,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
             createH2DataSource(path, matcherKey);
             createCsvDatabaseImporter(path, matcherKey);
             createMapping(path, matcherKey);
+            createCheckSuite(path, matcherKey);
             createContext(path, matcherKey);
 
         } catch (IOException e) {
@@ -167,6 +178,29 @@ public class ProbeFileListener implements FileSystemWatcherListener {
             catalogFolderConfigsMapping.put(path, configXmiFileListener);
         } catch (IOException e) {
             logger.error("Failed to create mapping configuration for path: {}", path, e);
+        }
+    }
+
+    private void createCheckSuite(Path path, String matcherKey) {
+        Path checkSuitePath = path.resolve("check");
+        if (!Files.isDirectory(checkSuitePath)) {
+            logger.debug("No check directory found at: {}, skipping", checkSuitePath);
+            return;
+        }
+        try {
+            Configuration configCheckSuiteFileListener = ca.getFactoryConfiguration(CheckSuiteXmiFileListener.PID,
+                    UUID.randomUUID().toString(), "?");
+
+            Dictionary<String, Object> props = new Hashtable<>();
+            props.put(FileSystemWatcherWhiteboardConstants.FILESYSTEM_WATCHER_PATH,
+                    checkSuitePath.toAbsolutePath().toString());
+            props.put(MATCHER_KEY, matcherKey);
+
+            configCheckSuiteFileListener.update(props);
+
+            catalogFolderConfigsCheckSuite.put(path, configCheckSuiteFileListener);
+        } catch (IOException e) {
+            logger.error("Failed to create check suite configuration for path: {}", path, e);
         }
     }
 
