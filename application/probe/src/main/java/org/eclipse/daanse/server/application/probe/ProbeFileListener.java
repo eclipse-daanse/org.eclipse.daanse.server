@@ -224,6 +224,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
         props.put("description", theDescription);
         props.put("catalog.path", catalog_path);
         props.put("useAggregates", true);
+        props.put(KEY_FILE_CONTEXT_MATCHER, matcherKey);
         configContext.update(props);
 
         catalogFolderConfigsContext.put(path, configContext);

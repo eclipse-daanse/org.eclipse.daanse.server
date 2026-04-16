@@ -172,53 +172,5 @@
       <scope>compile</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.sql.guard.jsqltranspiler</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.sql.guard.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.sql.deparser.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.sql.deparser.jsqlparser</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.io.fs.watcher.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jdbc.db.importer.csv</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <scope>compile</scope>
-    </dependency>
-
   </dependencies>
 </project>
