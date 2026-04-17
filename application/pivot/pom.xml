@@ -34,7 +34,18 @@
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.fileinstall</artifactId>
+      <version>3.7.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.configadmin.plugin.interpolation</artifactId>
+      <version>1.2.8</version>
+      <scope>compile</scope>
+    </dependency>    
   </dependencies>
 
   <build>
