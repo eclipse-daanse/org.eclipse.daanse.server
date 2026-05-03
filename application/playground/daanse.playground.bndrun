@@ -49,15 +49,10 @@
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.h2',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.h2',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.mysql',\
-	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.sqlite',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.oracle',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.oracle',\
 	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.postgresql',\
-	bnd.identity;id='org.eclipse.daanse.jdbc.datasource.mssqlserver',\
     bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.mysql',\
-	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.mssqlserver',\
-	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.mariadb',\
-	bnd.identity;id='org.eclipse.daanse.jdbc.db.dialect.db.sqlite',\
 	bnd.identity;id='org.apache.felix.fileinstall',\
 	bnd.identity;id='org.eclipse.daanse.jakarta.servlet.filter.cors',\
 	bnd.identity;id='org.apache.commons.commons-fileupload',\
