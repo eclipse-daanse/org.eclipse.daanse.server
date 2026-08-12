@@ -17,10 +17,12 @@ import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.DATASOURCE_PRO
 import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.DATASOURCE_PROPERTY_PLUGABLE_FILESYSTEM;
 import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.OPTION_PLUGABLE_FILESYSTEM_MEM_FS;
 import static org.eclipse.daanse.jdbc.datasource.h2.api.Constants.PID_DATASOURCE;
+import static org.eclipse.daanse.jdbc.datasource.pools.api.Constants.POOL_PROPERTY_DATASOURCE_TARGET;
+import static org.eclipse.daanse.jdbc.datasource.pools.hikari.api.Constants.PID_CONNECTION_POOL;
 import static org.eclipse.daanse.sql.jdbc.importer.csv.api.Constants.PID_CSV_DATA_IMPORTER;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_PID;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER;
-import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DATA_SOURCE;
+import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_CONNECTION_POOL;
 import static org.eclipse.daanse.rolap.core.api.Constants.BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY;
 
 import java.io.IOException;
@@ -68,6 +70,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
     ConfigurationAdmin ca;
 
     private Map<Path, Configuration> catalogFolderConfigsDS = new ConcurrentHashMap<>();
+    private Map<Path, Configuration> catalogFolderConfigsPool = new ConcurrentHashMap<>();
     private Map<Path, Configuration> catalogFolderConfigsCSV = new ConcurrentHashMap<>();
     private Map<Path, Configuration> catalogFolderConfigsContext = new ConcurrentHashMap<>();
     private Map<Path, Configuration> catalogFolderConfigsMapping = new ConcurrentHashMap<>();
@@ -123,6 +126,15 @@ public class ProbeFileListener implements FileSystemWatcherListener {
         }
 
         try {
+            Configuration c = catalogFolderConfigsPool.remove(path);
+            if (c != null) {
+                c.delete();
+            }
+        } catch (IOException e) {
+            logger.error("Failed to delete connection pool configuration for path: {}", path, e);
+        }
+
+        try {
             Configuration c = catalogFolderConfigsMapping.remove(path);
             c.delete();
         } catch (IOException e) {
@@ -151,6 +163,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
         try {
             createH2DataSource(path, matcherKey);
+            createConnectionPool(path, matcherKey);
             createCsvDatabaseImporter(path, matcherKey);
             createMapping(path, matcherKey);
             createCheckSuite(path, matcherKey);
@@ -209,7 +222,7 @@ public class ProbeFileListener implements FileSystemWatcherListener {
         Configuration configContext = ca.getFactoryConfiguration(BASIC_CONTEXT_PID, UUID.randomUUID().toString(), "?");
 
         Dictionary<String, Object> props = new Hashtable<>();
-        props.put(BASIC_CONTEXT_REF_NAME_DATA_SOURCE + TARGET_EXT, filterOfMatcherKey(matcherKey));
+        props.put(BASIC_CONTEXT_REF_NAME_CONNECTION_POOL + TARGET_EXT, filterOfMatcherKey(matcherKey));
         props.put(BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY + TARGET_EXT, "(org.eclipse.daanse.dialect.name=H2)");
         props.put(BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER + TARGET_EXT, filterOfMatcherKey(matcherKey));
 
@@ -250,10 +263,30 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
         propsH2.put(DATASOURCE_PROPERTY_IDENTIFIER, UUID.randomUUID().toString());
         propsH2.put(DATASOURCE_PROPERTY_PLUGABLE_FILESYSTEM, OPTION_PLUGABLE_FILESYSTEM_MEM_FS);
+        // Without this, H2 discards the in-memory database as soon as the last connection
+        // closes - the CSV importer finishes, closes, and the pool later opens a fresh empty
+        // database of the same name. -1 keeps it for the lifetime of the JVM.
+        propsH2.put(org.eclipse.daanse.jdbc.datasource.h2.api.Constants
+                .DATASOURCE_PROPERTY_DB_CLOSE_DELAY, "-1");
         propsH2.put(KEY_FILE_CONTEXT_MATCHER, matcherKey);
         configH2.update(propsH2);
 
         catalogFolderConfigsDS.put(path, configH2);
+    }
+
+    /**
+     * The pool between the folder's DataSource and its context. The context binds
+     * a pool, never a DataSource, so every catalog folder needs one of its own.
+     */
+    private void createConnectionPool(Path path, String matcherKey) throws IOException {
+        Configuration configPool = ca.getFactoryConfiguration(PID_CONNECTION_POOL, UUID.randomUUID().toString(), "?");
+
+        Dictionary<String, Object> props = new Hashtable<>();
+        props.put(POOL_PROPERTY_DATASOURCE_TARGET, filterOfMatcherKey(matcherKey));
+        props.put(KEY_FILE_CONTEXT_MATCHER, matcherKey);
+        configPool.update(props);
+
+        catalogFolderConfigsPool.put(path, configPool);
     }
 
     private static final String filterOfMatcherKey(String matcherKey) {
