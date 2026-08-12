@@ -25,6 +25,24 @@
     <plugins>
       <plugin>
         <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-resolver-maven-plugin</artifactId>
+        <version>${bnd.version}</version>
+        <configuration>
+          <failOnChanges>false</failOnChanges>
+          <bndruns>
+            <bndrun>daanse.probe.bndrun</bndrun>
+          </bndruns>
+          <includeDependencyManagement>true</includeDependencyManagement>
+          <reportOptional>false</reportOptional>
+          <scopes>
+            <scope>compile</scope>
+            <scope>runtime</scope>
+            <scope>test</scope>
+          </scopes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
         <artifactId>bnd-export-maven-plugin</artifactId>
         <version>${bnd.version}</version>
         <configuration>
@@ -82,6 +100,20 @@
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.jdbc.datasource.h2</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.jdbc.datasource.pools.api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.jdbc.datasource.pools.hikari</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>

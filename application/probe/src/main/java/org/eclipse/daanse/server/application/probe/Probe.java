@@ -43,16 +43,21 @@ public class Probe {
     private static final String CONFIG_IDENT = "probe";
     private static final String TARGET_EXT = ".target";
 
-    private static final String PID_MS_SOAP_MSG_SAAJ = "daanse.xmla.server.jakarta.saaj.XmlaServlet";
-    private static final String PID_XMLA_SERVICE = "daanse.olap.xmla.bridge.ContextGroupXmlaService";
+    // The EMF-native stack: the connector serves the SPI, the JDK HTTP server fronts it on
+    // its own port (8090, /xmla).
+    private static final String PID_XMLA_SERVICE = "daanse.olap.xmla.connector.OlapXmlaConnector";
+    private static final String PID_XMLA_HTTP =
+            "org.eclipse.daanse.xmla.server.jdk.httpserver.JdkHttpServer";
     private static final String PID_CONTEXT_GROUP = "daanse.olap.core.BasicContextGroup";
+    private static final String PID_FIXED_IDENTITY =
+            "org.eclipse.daanse.xmla.server.auth.dummy.FixedIdentityAuthenticator";
 
     @Reference
     ConfigurationAdmin ca;
 
-    private Configuration configXmlaEndpoint;
-    private Configuration confSoapLoggingHandler;
     private Configuration confContextGroupXmlaService;
+    private Configuration configXmlaHttp;
+    private Configuration configFixedIdentity;
     private Configuration confDataSource;
     private Configuration confContextGroup;
     private Configuration configAuthFilter;
@@ -72,9 +77,10 @@ public class Probe {
     public void activate() throws IOException {
         logger.info("Activating ProbeSetup");
 
-        initXmlaEndPoint();
         initRoleAuthFilter();
         initCorsFilter();
+        initXmlaHttp();
+        initFixedIdentity();
         initXmlaService();
         initFileListener();
         initContextGroup();
@@ -105,6 +111,37 @@ public class Probe {
         propsCG.put(Constants.BASIC_CONTEXT_GROUP_REF_NAME_CONTEXTS + TARGET_EXT, "(service.pid=*)");
 
         confContextGroup.update(propsCG);
+    }
+
+    /**
+     * The XMLA port. Mechanisms are services rather than configuration, so this
+     * only states the endpoint's policy and its CORS.
+     */
+    private void initXmlaHttp() throws IOException {
+        configXmlaHttp = ca.getConfiguration(PID_XMLA_HTTP, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put("corsAllowedOrigins", "*");
+        // The fixed identity below names every caller but proves nothing about them, and
+        // a stand-in deliberately does not satisfy a demand for a login. Demanding one
+        // here would refuse every request; this probe is a development server and says so.
+        dict.put("requirePrincipal", Boolean.FALSE);
+        configXmlaHttp.update(dict);
+    }
+
+    /**
+     * The probe is a development server and authenticates nobody: every caller
+     * becomes the same configured user, which is enough to exercise the roles a
+     * catalog defines without a directory to talk to.
+     */
+    private void initFixedIdentity() throws IOException {
+        configFixedIdentity = ca.getConfiguration(PID_FIXED_IDENTITY, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        // This names every caller without verifying anything, which the component makes
+        // the deployment say out loud.
+        dict.put("acknowledgeUnauthenticated", Boolean.TRUE);
+        dict.put("userName", "probe");
+        dict.put("roles", new String[] { "Admin" });
+        configFixedIdentity.update(dict);
     }
 
     private void initXmlaService() throws IOException {
@@ -145,18 +182,6 @@ public class Probe {
 
     }
 
-    private void initXmlaEndPoint() throws IOException {
-
-        configXmlaEndpoint = ca.getFactoryConfiguration(PID_MS_SOAP_MSG_SAAJ, CONFIG_IDENT, "?");
-
-        Dictionary<String, Object> dict = new Hashtable<>();
-        dict.put("xmlaService.target", "(service.pid=*)");
-        dict.put("osgi.http.whiteboard.servlet.pattern", "/xmla");
-
-        configXmlaEndpoint.update(dict);
-
-    }
-
     private void initDocumenter() throws IOException {
 
         configDocumenterMarkdown = ca.getFactoryConfiguration(
@@ -177,7 +202,7 @@ public class Probe {
                 CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
         dict.put(org.eclipse.daanse.olap.odc.simple.api.Constants.CREATOR_PROPERTY_DATASOURCE,
-                "http://localhost:8080/xmla");
+                "http://localhost:8090/xmla");
         configOdcWriter.update(dict);
 
         configAutoODC = ca.getFactoryConfiguration(org.eclipse.daanse.olap.odc.simple.api.Constants.AUTO_ODC_PID,
@@ -198,19 +223,18 @@ public class Probe {
     public void deactivate() throws IOException {
         logger.info("Deactivating ProbeSetup");
 
-        if (configXmlaEndpoint != null) {
-            configXmlaEndpoint.delete();
-        }
         if (configAuthFilter != null) {
             configAuthFilter.delete();
+        }
+        if (configFixedIdentity != null) {
+            configFixedIdentity.delete();
+        }
+        if (configXmlaHttp != null) {
+            configXmlaHttp.delete();
         }
         if (configCorsFilter != null) {
             configCorsFilter.delete();
         }
-        if (confSoapLoggingHandler != null) {
-            confSoapLoggingHandler.delete();
-        }
-
         if (configDocumenterMarkdown != null) {
             configDocumenterMarkdown.delete();
         }
