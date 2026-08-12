@@ -66,20 +66,36 @@
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>osgi-resource-locator</artifactId>
-            <version>2.5.0-b42</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.xml.messaging.saaj</groupId>
-            <artifactId>saaj-impl</artifactId>
-            <version>3.0.4</version>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.olap.xmla.connector</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
-            <artifactId>org.eclipse.daanse.olap.xmla.bridge</artifactId>
+            <artifactId>org.eclipse.daanse.xmla.server.jdk.httpserver</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.xmla.server.whiteboard.servlet</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.xmla.server.auth.dummy</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.xmla.server.auth.roles</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -87,20 +103,34 @@
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.http.jetty12</artifactId>
-            <version>1.1.6</version>
+            <version>2.0.4</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.eclipse.daanse</groupId>
-            <artifactId>org.eclipse.daanse.xmla.server.jakarta.saaj</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.http.servlet-api</artifactId>
+            <version>6.1.0</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
             <artifactId>org.eclipse.daanse.mdx.parser.ccc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>osgi-resource-locator</artifactId>
+            <version>2.4.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.dmv.parser.ccc</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
