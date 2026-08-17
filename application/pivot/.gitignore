@@ -1,6 +1,0 @@
-log/*
-!log/.keep
-catalog/*
-!catalog/.keep
-load/*
-!load/.keep

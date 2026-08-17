@@ -139,6 +139,22 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- The playground bundles every database; h2 is no longer inherited from
+         the application parent since the probe moved to duckdb. -->
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.jdbc.datasource.h2</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.sql.dialect.db.h2</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.jdbc.datasource.mariadb</artifactId>

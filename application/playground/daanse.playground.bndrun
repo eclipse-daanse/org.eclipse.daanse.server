@@ -89,6 +89,7 @@
 	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
 	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
 	org.apache.felix.webconsole;version='[5.0.12,5.0.13)',\
+	org.eclipse.daanse.cwm.model.cwm.foundation.businessinformation;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.cwm.model.cwm.foundation.datatypes;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.cwm.model.cwm.foundation.keysindexes;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.cwm.model.cwm.objectmodel.behavioral;version='[0.0.1,0.0.2)',\

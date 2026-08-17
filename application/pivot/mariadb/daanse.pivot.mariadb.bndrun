@@ -1,0 +1,131 @@
+#*******************************************************************************
+# Copyright (c)  2026 Contributors to the Eclipse Foundation
+#
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+#   Contributors:
+#   SmartCity Jena - initial
+#   Stefan Bischof (bipolis.org) - initial
+#*******************************************************************************
+
+-include: ~${.}/../common/daanse.pivot.base.bndrun
+
+-runrequires.db: \
+    bnd.identity;id='${project.artifactId}',\
+    bnd.identity;id='org.eclipse.daanse.jdbc.datasource.mariadb',\
+    bnd.identity;id='org.eclipse.daanse.sql.dialect.db.mariadb'
+
+-runbundles: \
+	ai.starlake.transpiler;version='[1.8.0,1.8.1)',\
+	ch.qos.logback.classic;version='[1.5.6,1.5.7)',\
+	com.fasterxml.woodstox.woodstox-core;version='[7.1.1,7.1.2)',\
+	com.github.ben-manes.caffeine;version='[3.1.8,3.1.9)',\
+	com.zaxxer.HikariCP;version='[7.1.0,7.1.1)',\
+	mariadb-java-client;version='[3.5.5,3.5.6)',\
+	net.sf.jsqlparser;version='[5.3.167,5.3.168)',\
+	org.apache.aries.spifly.dynamic.bundle;version='[1.3.7,1.3.8)',\
+	org.apache.commons.commons-collections4;version='[4.5.0,4.5.1)',\
+	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
+	org.apache.felix.http.jetty12;version='[2.0.4,2.0.5)',\
+	org.apache.felix.http.servlet-api;version='[6.1.0,6.1.1)',\
+	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
+	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
+	org.eclipse.daanse.cwm.model.cwm.foundation.businessinformation;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.foundation.datatypes;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.foundation.keysindexes;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.objectmodel.behavioral;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.objectmodel.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.objectmodel.instance;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.cwm.model.cwm.resource.relational;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.dmv.model.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.dmv.model.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.dmv.parser.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.dmv.parser.ccc;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jakarta.servlet.filter.cors;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.mariadb;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.pools.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.jdbc.datasource.pools.hikari;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.basic;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.lcid.cfg;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.model.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.model.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.parser.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.mdx.parser.ccc;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.format;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.spi;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.util.format;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.xmla.connector;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.xmla.connector.multidimensional;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.xmla.connector.relational;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.olap.xmla.connector.relational.oledb;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.rolap.mapping.model;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.server.application.pivot.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.server.application.pivot.mariadb;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.deparser.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.dialect.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.dialect.db.common;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.dialect.db.mariadb;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.dialect.db.mysql;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.guard.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.guard.jsqltranspiler;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.jdbc.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.jdbc.impl;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.jdbc.record;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.model;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.statement.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.sql.statement.impl;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.api;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.csdl.v2.an;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.csdl.v2.bi;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.csdl.v2.cg;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.csdl.v2.edm;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.empty;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.engine;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.engine200;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.engine300;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.engine300_300;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.exception;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.ext;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.io;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.mddataset;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.msxmla;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.multipleresults;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.rowset.core;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.rowset.mining;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.rowset.multidimensional;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.rowset.relational;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.rowset.server;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.soap;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.model.xmla;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.adapter.emf;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.auth.basic;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.auth.roles;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.auth.store.ldap;version='[0.0.1,0.0.2)',\
+	org.eclipse.daanse.xmla.server.whiteboard.servlet;version='[0.0.1,0.0.2)',\
+	org.eclipse.emf.common;version='[2.44.0,2.44.1)',\
+	org.eclipse.emf.ecore;version='[2.41.0,2.41.1)',\
+	org.eclipse.emf.ecore.xmi;version='[2.39.0,2.39.1)',\
+	org.eclipse.fennec.emf.osgi.component;version='[0.1.1,0.1.2)',\
+	org.glassfish.hk2.osgi-resource-locator;version='[2.4.0,2.4.1)',\
+	org.objectweb.asm;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.commons;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree.analysis;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.util;version='[9.9.0,9.9.1)',\
+	org.osgi.service.cm;version='[1.6.1,1.6.2)',\
+	org.osgi.service.component;version='[1.5.1,1.5.2)',\
+	org.osgi.service.log;version='[1.4.0,1.4.1)',\
+	org.osgi.util.converter;version='[1.0.9,1.0.10)',\
+	org.osgi.util.function;version='[1.2.0,1.2.1)',\
+	org.osgi.util.promise;version='[1.3.0,1.3.1)',\
+	org.osgi.util.pushstream;version='[1.1.0,1.1.1)',\
+	stax2-api;version='[4.2.2,4.2.3)'

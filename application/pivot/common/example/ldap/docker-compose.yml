@@ -1,0 +1,87 @@
+# Daanse pivot with LDAP backed basic authentication, using an LLDAP side
+# container (https://github.com/lldap/lldap - the image comes from the LLDAP
+# project itself and is a lightweight LDAP server). For everyone who wants to
+# try the authentication without running their own LDAP.
+#
+# This one file is self contained: the users and groups are embedded below as
+# inline configs and loaded by LLDAP's official bootstrap script, so
+#
+#   docker compose up
+#   curl -u admin:admin123 -X POST http://localhost:8080/xmla ...
+#
+# is all it takes (requires docker compose >= 2.23; older versions mount the
+# sibling bootstrap/ directory instead - same content). LLDAP also serves a
+# web UI on http://localhost:17170 (admin / admin123).
+#
+# The pivot image is the PostgreSQL one here; any daanse-pivot-<db> image works
+# the same way, only the DAANSE_JDBC_* variables differ.
+
+configs:
+  # Group names become the caller's roles and are intersected with the roles
+  # the catalog declares - name groups after your catalog's roles.
+  groups.json:
+    content: |
+      { "name": "Administrator" }
+  # admin is LLDAP's built-in administrator (password from LLDAP_LDAP_USER_PASS)
+  # and doubles as the service bind account; here it joins the Administrator role.
+  admin.json:
+    content: |
+      { "id": "admin", "email": "admin@example.org", "groups": ["lldap_admin", "Administrator"] }
+  analyst.json:
+    content: |
+      { "id": "analyst", "email": "analyst@example.org", "password": "analyst123" }
+
+services:
+  lldap:
+    image: lldap/lldap:stable
+    environment:
+      LLDAP_LDAP_BASE_DN: dc=example,dc=org
+      LLDAP_LDAP_USER_PASS: admin123
+      LLDAP_KEY_SEED: change-me-for-anything-real
+      LLDAP_JWT_SECRET: change-me-too-at-least-32-characters-long
+    ports:
+      - "17170:17170"   # web UI, optional
+
+  # One-shot job running LLDAP's official bootstrap script against the server.
+  lldap-bootstrap:
+    image: lldap/lldap:stable
+    depends_on:
+      - lldap
+    entrypoint: ["/bin/sh", "-c", "sleep 2 && /app/bootstrap.sh"]
+    restart: on-failure
+    environment:
+      LLDAP_URL: http://lldap:17170
+      LLDAP_ADMIN_USERNAME: admin
+      LLDAP_ADMIN_PASSWORD: admin123
+      DO_CLEANUP: "false"
+    configs:
+      - source: groups.json
+        target: /bootstrap/group-configs/groups.json
+      - source: admin.json
+        target: /bootstrap/user-configs/admin.json
+      - source: analyst.json
+        target: /bootstrap/user-configs/analyst.json
+
+  pivot:
+    image: eclipsedaanse/daanse-pivot-postgres:snapshot
+    depends_on:
+      - lldap
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./catalog:/app/catalog:ro
+    environment:
+      # database (PostgreSQL image)
+      DAANSE_JDBC_HOST: db.example.org
+      DAANSE_JDBC_DBNAME: warehouse
+      DAANSE_JDBC_USER: daanse
+      DAANSE_JDBC_PASSWORD: secret
+      # LDAP backed basic authentication
+      DAANSE_LDAP_URL: ldap://lldap:3890
+      DAANSE_LDAP_TRANSPORT_SECURITY: NONE
+      DAANSE_LDAP_ALLOW_UNENCRYPTED: "true"
+      DAANSE_LDAP_USER_DN_PATTERN: uid={0},ou=people,dc=example,dc=org
+      DAANSE_LDAP_SERVICE_BIND_DN: uid=admin,ou=people,dc=example,dc=org
+      DAANSE_LDAP_SERVICE_BIND_PASSWORD: admin123
+      DAANSE_LDAP_GROUP_SEARCH_BASE: ou=groups,dc=example,dc=org
+      # DAANSE_AUTH_ANONYMOUS: "false"   # uncomment to require a login

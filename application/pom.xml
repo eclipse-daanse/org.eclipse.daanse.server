@@ -73,9 +73,8 @@
         </dependency>
 
         <!-- The rowset providers, split out of the connector by family. The
-             connector above is only the dispatch: without these three the server
-             starts, accepts a Discover, and refuses every request type as
-             unknown - which is exactly what it did until 2026-08-15. -->
+             connector above is only the dispatch: without these three the
+             server refuses every request type as unknown. -->
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
             <artifactId>org.eclipse.daanse.olap.xmla.connector.relational</artifactId>
@@ -121,6 +120,20 @@
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
             <artifactId>org.eclipse.daanse.xmla.server.auth.roles</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.xmla.server.auth.basic</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.xmla.server.auth.store.ldap</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

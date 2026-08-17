@@ -222,9 +222,8 @@ public class ProbeFileListener implements FileSystemWatcherListener {
 
         Dictionary<String, Object> props = new Hashtable<>();
         props.put(BASIC_CONTEXT_REF_NAME_CONNECTION_POOL + TARGET_EXT, filterOfMatcherKey(matcherKey));
-        // Named, although DuckDB is the only dialect in the bundle set: the context
-        // binds whichever factory answers first, and one added later would silently
-        // take over the catalog. This once handed H2 a DuckDB statement.
+        // Name the dialect explicitly: the context binds whichever factory answers
+        // first, so a dialect bundle added later would silently take over.
         props.put(BASIC_CONTEXT_REF_NAME_DIALECT_FACTORY + TARGET_EXT, "(org.eclipse.daanse.dialect.name=DUCKDB)");
         props.put(BASIC_CONTEXT_REF_NAME_CATALOG_MAPPING_SUPPLIER + TARGET_EXT, filterOfMatcherKey(matcherKey));
 
@@ -258,20 +257,12 @@ public class ProbeFileListener implements FileSystemWatcherListener {
         catalogFolderConfigsCSV.put(path, configCsv);
     }
 
-    /**
-     * The in-memory database this catalog folder is loaded into: DuckDB.
-     * <p>
-     * Not a choice any more. Measured on FoodMart in this repository, against H2 as
-     * the deployment it replaced: a crossjoin answered in 0.06 s where H2 took
-     * 1077 s, and the catalog's CSV files read in 0.67 s where row-by-row inserts
-     * needed 3.2 minutes.
-     */
+    /** The in-memory DuckDB database this catalog folder is loaded into. */
     private void createDataSource(Path path, String matcherKey) throws IOException {
         Configuration config = ca.getFactoryConfiguration(PID_DATASOURCE, UUID.randomUUID().toString(), "?");
         Dictionary<String, Object> props = new Hashtable<>();
-        // In memory. The DataSource keeps the connection that owns the database and hands
-        // out duplicates of it, which is what makes one in-memory database reachable from
-        // the importer and the pool alike.
+        // The DataSource keeps the owning connection and hands out duplicates,
+        // which makes one in-memory database reachable from importer and pool alike.
         props.put(DATASOURCE_PROPERTY_DATABASENAME, ":memory:");
         props.put(DATASOURCE_PROPERTY_SETTINGS, new String[] { "threads=4" });
         props.put(KEY_FILE_CONTEXT_MATCHER, matcherKey);
