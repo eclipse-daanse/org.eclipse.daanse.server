@@ -1,0 +1,67 @@
+# Complete, self contained Daanse pivot demo: a PostgreSQL side container is
+# seeded with a tiny fact table, the pivot serves the matching OLAP catalog -
+# both embedded below as inline configs, so this one file is all it takes:
+#
+#   docker compose up
+#   curl -X POST http://localhost:8080/xmla \
+#     -H 'Content-Type: text/xml' \
+#     -H 'SOAPAction: "urn:schemas-microsoft-com:xml-analysis:Execute"' \
+#     -d '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><Execute xmlns="urn:schemas-microsoft-com:xml-analysis"><Command><Statement>SELECT [Measures].[Measure-Sum] ON COLUMNS FROM [MinimalCube]</Statement></Command><Properties><PropertyList><Catalog>Daanse Tutorial - Cube Minimal</Catalog><Format>Multidimensional</Format></PropertyList></Properties></Execute></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+#
+# The answer contains the cell value 6 (1+2+3). Requires docker compose >= 2.23
+# for inline configs. Swap in your own catalog and database to go further; the
+# sibling ../ldap example adds LDAP authentication on top.
+
+configs:
+  init.sql:
+    content: |
+      CREATE TABLE "Fact" ("KEY" VARCHAR(100), "VALUE" INTEGER);
+      INSERT INTO "Fact" VALUES ('A', 1), ('B', 2), ('C', 3);
+  catalog.xmi:
+    content: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:businessinformation="http://www.omg.org/spec/CWM/1.1/foundation/businessinformation" xmlns:relational="http://www.omg.org/spec/CWM/1.1/resource/relational" xmlns:rolapcat="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/catalog" xmlns:rolapcube="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/olap/cube" xmlns:rolapmeas="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/olap/cube/measure" xmlns:rolapsrc="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/database/source">
+        <rolapcat:Catalog xmi:id="_catalog_cube_minimal" name="Daanse Tutorial - Cube Minimal" importedElement="_schema">
+          <ownedElement xsi:type="rolapsrc:TableSource" xmi:id="_tablesource_fact" name="Fact" table="_table_fact"/>
+          <ownedElement xsi:type="rolapcube:PhysicalCube" xmi:id="_physicalcube_minimalcube" name="MinimalCube" source="_tablesource_fact">
+            <measureGroups xmi:id="_measuregroup_minimalcube" name="MinimalCube">
+              <measures xsi:type="rolapmeas:SumMeasure" xmi:id="_summeasure_measure_sum" name="Measure-Sum" column="_column_fact_value"/>
+            </measureGroups>
+          </ownedElement>
+          <ownedElement xsi:type="businessinformation:Description" xmi:id="_description_cube_minimal_documentation_und" name="Daanse Tutorial - Cube Minimal_documentation_und" body="Basic cube structure with measures only" language="und" type="documentation" modelElement="_catalog_cube_minimal"/>
+        </rolapcat:Catalog>
+        <relational:SQLSimpleType xmi:id="_sqlsimpletype_character_varying" name="CHARACTER VARYING" typeNumber="12"/>
+        <relational:SQLSimpleType xmi:id="_sqlsimpletype_integer" name="INTEGER" typeNumber="4"/>
+        <relational:Schema xmi:id="_schema" importer="_catalog_cube_minimal">
+          <ownedElement xsi:type="relational:Table" xmi:id="_table_fact" name="Fact">
+            <feature xsi:type="relational:Column" xmi:id="_column_fact_key" name="KEY" type="_sqlsimpletype_character_varying"/>
+            <feature xsi:type="relational:Column" xmi:id="_column_fact_value" name="VALUE" type="_sqlsimpletype_integer"/>
+          </ownedElement>
+        </relational:Schema>
+      </xmi:XMI>
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: daanse
+      POSTGRES_PASSWORD: secret
+    configs:
+      - source: init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+
+  pivot:
+    image: eclipsedaanse/daanse-pivot-postgres:snapshot
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    configs:
+      - source: catalog.xmi
+        target: /app/catalog/catalog.xmi
+    environment:
+      DAANSE_JDBC_HOST: db
+      DAANSE_JDBC_DBNAME: demo
+      DAANSE_JDBC_USER: daanse
+      DAANSE_JDBC_PASSWORD: secret

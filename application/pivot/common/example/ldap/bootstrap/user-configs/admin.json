@@ -1,0 +1,6 @@
+{
+  "id": "admin",
+  "email": "admin@example.org",
+  "displayName": "Admin",
+  "groups": ["lldap_admin", "Administrator"]
+}
