@@ -18,7 +18,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.daanse.io.fs.watcher.api.FileSystemWatcherWhiteboardConstants;
-import org.eclipse.daanse.jakarta.servlet.filter.auth.dummy.role.BasicAuthPipeRoleFilter;
 import org.eclipse.daanse.olap.core.api.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -37,30 +36,31 @@ import org.slf4j.LoggerFactory;
 public class Probe {
 
     private static final String DAANSE_PROBE_CATALOG_DIR = "daanse.probe.catalog.dir";
+    private static final String DAANSE_PROBE_REQUIRE_LOGIN = "daanse.probe.requireLogin";
 
     private static final Logger logger = LoggerFactory.getLogger(Probe.class);
 
     private static final String CONFIG_IDENT = "probe";
     private static final String TARGET_EXT = ".target";
 
-    // The EMF-native stack: the connector serves the SPI, the JDK HTTP server fronts it on
-    // its own port (8090, /xmla).
     private static final String PID_XMLA_SERVICE = "daanse.olap.xmla.connector.OlapXmlaConnector";
-    private static final String PID_XMLA_HTTP =
-            "org.eclipse.daanse.xmla.server.jdk.httpserver.JdkHttpServer";
+    private static final String PID_XMLA_SERVLET =
+            "org.eclipse.daanse.xmla.server.whiteboard.servlet.XmlaServlet";
     private static final String PID_CONTEXT_GROUP = "daanse.olap.core.BasicContextGroup";
     private static final String PID_FIXED_IDENTITY =
             "org.eclipse.daanse.xmla.server.auth.dummy.FixedIdentityAuthenticator";
+    private static final String PID_BASIC_PIPE_ROLES =
+            "org.eclipse.daanse.xmla.server.auth.dummy.BasicAuthPipeRoleAuthenticator";
 
     @Reference
     ConfigurationAdmin ca;
 
     private Configuration confContextGroupXmlaService;
-    private Configuration configXmlaHttp;
+    private Configuration configXmlaServlet;
     private Configuration configFixedIdentity;
+    private Configuration configBasicPipeRoles;
     private Configuration confDataSource;
     private Configuration confContextGroup;
-    private Configuration configAuthFilter;
 
     private Configuration configDocumenterMarkdown;
     private Configuration configAutoDocumenter;
@@ -77,10 +77,10 @@ public class Probe {
     public void activate() throws IOException {
         logger.info("Activating ProbeSetup");
 
-        initRoleAuthFilter();
         initCorsFilter();
-        initXmlaHttp();
+        initXmlaServlet();
         initFixedIdentity();
+        initBasicPipeRoles();
         initXmlaService();
         initFileListener();
         initContextGroup();
@@ -113,35 +113,39 @@ public class Probe {
         confContextGroup.update(propsCG);
     }
 
-    /**
-     * The XMLA port. Mechanisms are services rather than configuration, so this
-     * only states the endpoint's policy and its CORS.
-     */
-    private void initXmlaHttp() throws IOException {
-        configXmlaHttp = ca.getConfiguration(PID_XMLA_HTTP, "?");
+    /** The XMLA endpoint on the HTTP whiteboard (Jetty, port 8080). */
+    private void initXmlaServlet() throws IOException {
+        configXmlaServlet = ca.getFactoryConfiguration(PID_XMLA_SERVLET, CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
-        dict.put("corsAllowedOrigins", "*");
-        // The fixed identity below names every caller but proves nothing about them, and
-        // a stand-in deliberately does not satisfy a demand for a login. Demanding one
-        // here would refuse every request; this probe is a development server and says so.
-        dict.put("requirePrincipal", Boolean.FALSE);
-        configXmlaHttp.update(dict);
+        dict.put("osgi.http.whiteboard.servlet.pattern", "/xmla");
+        // A client only sends credentials after a 401; without the challenge it
+        // arrives anonymous and falls through to the fixed identity below.
+        dict.put("requirePrincipal", Boolean.getBoolean(DAANSE_PROBE_REQUIRE_LOGIN));
+        configXmlaServlet.update(dict);
     }
 
     /**
-     * The probe is a development server and authenticates nobody: every caller
-     * becomes the same configured user, which is enough to exercise the roles a
-     * catalog defines without a directory to talk to.
+     * The probe authenticates nobody: anonymous callers become the same
+     * configured user, enough to exercise the roles a catalog defines.
      */
     private void initFixedIdentity() throws IOException {
         configFixedIdentity = ca.getConfiguration(PID_FIXED_IDENTITY, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
-        // This names every caller without verifying anything, which the component makes
-        // the deployment say out loud.
         dict.put("acknowledgeUnauthenticated", Boolean.TRUE);
         dict.put("userName", "probe");
-        dict.put("roles", new String[] { "Admin" });
+        // Roles are intersected with the catalog's own; the name must be one a
+        // catalog declares (FoodMart declares "Administrator").
+        dict.put("roles", new String[] { "Administrator" });
         configFixedIdentity.update(dict);
+    }
+
+    /** Log in as {@code UserName|Role1|Role2}; nothing is verified. */
+    private void initBasicPipeRoles() throws IOException {
+        configBasicPipeRoles = ca.getConfiguration(PID_BASIC_PIPE_ROLES, "?");
+        Dictionary<String, Object> dict = new Hashtable<>();
+        dict.put("acknowledgeUnverifiedCredentials", Boolean.TRUE);
+        dict.put("realm", "Daanse Probe");
+        configBasicPipeRoles.update(dict);
     }
 
     private void initXmlaService() throws IOException {
@@ -154,19 +158,6 @@ public class Probe {
         confContextGroupXmlaService.update(dict);
     }
 
-    private void initRoleAuthFilter() throws IOException {
-
-        //configAuthFilter = ca.getFactoryConfiguration(NoAuthDummyFilter.PID, CONFIG_IDENT, "?");
-        configAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
-
-//        configAuthFilter = ca.getFactoryConfiguration(BasicAuthPipeRoleFilter.PID, CONFIG_IDENT, "?");
-        Dictionary<String, Object> dict = new Hashtable<>();
-
-        dict.put("osgi.http.whiteboard.filter.pattern", "/*");
-        configAuthFilter.update(dict);
-
-    }
-
     private void initCorsFilter() throws IOException {
 
         configCorsFilter = ca.getFactoryConfiguration(
@@ -175,7 +166,7 @@ public class Probe {
 
         dict.put("osgi.http.whiteboard.filter.pattern", "/*");
         dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOW_CREDENTIALS_PARAM, true);
-        
+
         dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOWED_ORIGINS_PARAM, "*");
         dict.put(org.eclipse.daanse.jakarta.servlet.filter.cors.api.Constants.PROPERTY_ALLOWED_HEADERS_PARAM, "*");
         configCorsFilter.update(dict);
@@ -202,7 +193,7 @@ public class Probe {
                 CONFIG_IDENT, "?");
         Dictionary<String, Object> dict = new Hashtable<>();
         dict.put(org.eclipse.daanse.olap.odc.simple.api.Constants.CREATOR_PROPERTY_DATASOURCE,
-                "http://localhost:8090/xmla");
+                "http://localhost:8080/xmla");
         configOdcWriter.update(dict);
 
         configAutoODC = ca.getFactoryConfiguration(org.eclipse.daanse.olap.odc.simple.api.Constants.AUTO_ODC_PID,
@@ -223,14 +214,14 @@ public class Probe {
     public void deactivate() throws IOException {
         logger.info("Deactivating ProbeSetup");
 
-        if (configAuthFilter != null) {
-            configAuthFilter.delete();
-        }
         if (configFixedIdentity != null) {
             configFixedIdentity.delete();
         }
-        if (configXmlaHttp != null) {
-            configXmlaHttp.delete();
+        if (configBasicPipeRoles != null) {
+            configBasicPipeRoles.delete();
+        }
+        if (configXmlaServlet != null) {
+            configXmlaServlet.delete();
         }
         if (configCorsFilter != null) {
             configCorsFilter.delete();

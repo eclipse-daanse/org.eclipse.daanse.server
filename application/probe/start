@@ -1,23 +1,19 @@
+#!/bin/sh
 
-# Path to Java-Binary
-JAVA_EXEC="java"
-
-# Logback-Konfiguration
+JAVA_EXEC="${JAVA_HOME:+$JAVA_HOME/bin/}java"
 LOGBACK_CONFIG="./logback.xml"
 
-# Check if java -version returns output successfully
-if ! "$JAVA_EXEC" -version >/dev/null 2>&1; then
-  echo "Java is installed but not working properly (java -version failed)."
+# The bundles declare osgi.ee=JavaSE-25; on an older JVM nothing resolves.
+JAVA_MAJOR="$("$JAVA_EXEC" -version 2>&1 | awk -F'"' '/version/ { split($2, v, /[._]/); print (v[1] == "1" ? v[2] : v[1]); exit }')"
+if [ "${JAVA_MAJOR:-0}" -lt 25 ]; then
+  echo "Java 25 is required, but $JAVA_EXEC is Java ${JAVA_MAJOR:-unknown}. Point JAVA_HOME at a Java 25 installation."
   exit 1
 fi
 
-
-if [[ ! -f "$LOGBACK_CONFIG" ]]; then
+if [ ! -f "$LOGBACK_CONFIG" ]; then
   echo "Logback-Configuration-File $LOGBACK_CONFIG not found."
   exit 1
 fi
 
-# start Server
 echo "start Server"
 "$JAVA_EXEC" -Dlogback.configurationFile=file:"$LOGBACK_CONFIG" -jar daanse.probe.jar
-
