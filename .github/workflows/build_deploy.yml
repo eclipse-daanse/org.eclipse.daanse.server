@@ -30,11 +30,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5.0.0
 
-      - name: Download probe artifacts
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+      # The image copies the launcher jar from target/, saved to the cache by
+      # the shared build job.
+      - name: Restore Maven build artifacts
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
-          name: jar-files
-          path: .
+          path: |
+            ~/.m2/repository/org/eclipse/daanse
+            **/target
+          key: build-${{ runner.os }}-${{ github.sha }}
+          fail-on-cache-miss: true
 
       - name: Update dockerhub repo description
         uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
@@ -94,18 +99,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5.0.0
 
-      - name: Download pivot artifacts
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: jar-files
-          path: .
-
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 25
           cache: maven
+
+      # The image copies the launcher jar from target/, saved to the cache by
+      # the shared build job; the integration test below also builds on it.
+      - name: Restore Maven build artifacts
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ~/.m2/repository/org/eclipse/daanse
+            **/target
+          key: build-${{ runner.os }}-${{ github.sha }}
+          fail-on-cache-miss: true
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.2.1
