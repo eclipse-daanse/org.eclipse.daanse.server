@@ -93,9 +93,9 @@ docker run --name probe \
 
 - `--name probe`: Container name
 - `-v ~/temp/probe/catalog:/app/catalog/:rw,Z`: Mount local catalog directory ( read-write with SELinux context)
-- `-v ~/temp/probe/output:/app/output/:rw,Z` mount the output folder e.g. for documnetation
-- `-p 8095:8080`: Map host port 8095 to container port 8080
-- `-d`: Run in detached mode
+- `-v ~/temp/probe/output:/app/output/:rw,Z`: Mount the output folder, e.g. for the generated documentation
+- `-p 8095:8080`: Map host port 8095 to container port 8080 - the single HTTP server carrying the XMLA endpoint (`/xmla`)
+- `-it`: Attach a terminal (use `-d` to run detached instead)
 - `eclipsedaanse/probe:snapshot`: Container image
 
 
@@ -104,8 +104,6 @@ docker run --name probe \
 Use Docker Compose for multi-service setups with databases, reverse proxies, and monitoring:
 
 ```yaml
-version: '3.8'
-
 services:
   probe:
     image: eclipsedaanse/probe:snapshot
@@ -143,6 +141,26 @@ networks:
 docker-compose -f compose/docker-compose.yml up -d
 ```
 
+## Internal Database Engine
+
+The probe carries its own in-memory **DuckDB** database and loads the CSV
+files of every catalog into it - no external database is needed or possible.
+
+## System Properties
+
+When running the JAR directly (outside the container), two system properties
+adjust the probe. The XMLA endpoint is served on the single HTTP server on
+port 8080 at `/xmla`.
+
+| Property | Default | Description |
+|---|---|---|
+| `daanse.probe.catalog.dir` | `./catalog` | Directory the catalogs are read from (watched for changes) |
+| `daanse.probe.requireLogin` | `false` | Challenge requests instead of accepting them anonymously |
+
+```bash
+java -Ddaanse.probe.requireLogin=true -Dlogback.configurationFile=./logback.xml -jar daanse.probe.jar
+```
+
 ## Directory Structure
 
 ```text
@@ -153,8 +171,9 @@ docker-compose -f compose/docker-compose.yml up -d
 ├── catalog/                 # Data catalogs and mappings
 │   ├── */data/             # CSV data files
 │   └── */mapping/          # XMI catalog definitions
-├── output/                 # Output folder e.g.documentation
-└── log/                    # Application logs
+├── import/                  # Drop zone for catalog imports
+├── output/                  # Output folder, e.g. generated documentation and ODC files
+└── log/                     # Application logs
 ```
 
 ## Catalog Folder Structure
@@ -231,32 +250,24 @@ tutorial.cube.minimal/
 #### Mapping Definition (`catalog.xmi`)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xmlns:roma="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping">
-  
-  <!-- Catalog definition -->
-  <roma:Catalog id="_catalog_minimal" name="Cube - Minimal" 
-                cubes="_cube_minimal" dbschemas="_databaseSchema_minimal"/>
-  
-  <!-- Database schema with physical table -->
-  <roma:DatabaseSchema id="_databaseSchema_minimal">
-    <tables xsi:type="roma:PhysicalTable" id="_table_fact" name="Fact">
-      <columns xsi:type="roma:PhysicalColumn" id="_column_fact_key" name="KEY"/>
-      <columns xsi:type="roma:PhysicalColumn" id="_column_fact_value" name="VALUE" type="Integer"/>
-    </tables>
-  </roma:DatabaseSchema>
-  
-  <!-- Table query -->
-  <roma:TableQuery id="_query_fact" table="_table_fact"/>
-  
-  <!-- Physical cube with measures -->
-  <roma:PhysicalCube id="_cube_minimal" name="MinimalCube" query="_query_fact">
-    <measureGroups>
-      <measures xsi:type="roma:SumMeasure" id="_measure_sum" 
-                name="Measure-Sum" column="_column_fact_value"/>
-    </measureGroups>
-  </roma:PhysicalCube>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:businessinformation="http://www.omg.org/spec/CWM/1.1/foundation/businessinformation" xmlns:relational="http://www.omg.org/spec/CWM/1.1/resource/relational" xmlns:rolapcat="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/catalog" xmlns:rolapcube="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/olap/cube" xmlns:rolapmeas="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/olap/cube/measure" xmlns:rolapsrc="https://www.daanse.org/spec/org.eclipse.daanse.rolap.mapping/database/source">
+  <rolapcat:Catalog xmi:id="_catalog_cube_minimal" name="Daanse Tutorial - Cube Minimal" importedElement="_schema">
+    <ownedElement xsi:type="rolapsrc:TableSource" xmi:id="_tablesource_fact" name="Fact" table="_table_fact"/>
+    <ownedElement xsi:type="rolapcube:PhysicalCube" xmi:id="_physicalcube_minimalcube" name="MinimalCube" source="_tablesource_fact">
+      <measureGroups xmi:id="_measuregroup_minimalcube" name="MinimalCube">
+        <measures xsi:type="rolapmeas:SumMeasure" xmi:id="_summeasure_measure_sum" name="Measure-Sum" column="_column_fact_value"/>
+      </measureGroups>
+    </ownedElement>
+    <ownedElement xsi:type="businessinformation:Description" xmi:id="_description_cube_minimal_documentation_und" name="Daanse Tutorial - Cube Minimal_documentation_und" body="Basic cube structure with measures only" language="und" type="documentation" modelElement="_catalog_cube_minimal"/>
+  </rolapcat:Catalog>
+  <relational:SQLSimpleType xmi:id="_sqlsimpletype_character_varying" name="CHARACTER VARYING" typeNumber="12"/>
+  <relational:SQLSimpleType xmi:id="_sqlsimpletype_integer" name="INTEGER" typeNumber="4"/>
+  <relational:Schema xmi:id="_schema" importer="_catalog_cube_minimal">
+    <ownedElement xsi:type="relational:Table" xmi:id="_table_fact" name="Fact">
+      <feature xsi:type="relational:Column" xmi:id="_column_fact_key" name="KEY" type="_sqlsimpletype_character_varying"/>
+      <feature xsi:type="relational:Column" xmi:id="_column_fact_value" name="VALUE" type="_sqlsimpletype_integer"/>
+    </ownedElement>
+  </relational:Schema>
 </xmi:XMI>
 ```
 
@@ -392,11 +403,18 @@ The Probe server exposes its XMLA (XML for Analysis) endpoint at:
 
 ### Authentication & Role Testing
 
-Eclipse Daanse Probe uses a **simplified authentication system** designed for development and testing:
+Eclipse Daanse Probe uses a **simplified authentication system** designed for development and testing - nothing is verified:
+
+#### Anonymous Requests
+Requests without credentials are served as the stand-in identity `probe`
+carrying the role **Administrator**. Roles are intersected with the roles a
+catalog declares, so this only opens catalogs that actually declare an
+`Administrator` role (the shipped FoodMart tutorial does). Set
+`-Ddaanse.probe.requireLogin=true` to challenge instead.
 
 #### Basic Authentication
-- **Username**: Any username (no validation required)
-- **Password**: **Always leave empty** (no password needed)
+- **Username**: Any username (no validation), optionally with roles appended (see below)
+- **Password**: **Always leave empty** (credentials are acknowledged unverified, realm `Daanse Probe`)
 - **Purpose**: Development-friendly authentication for quick testing
 
 #### Role-Based Access Control Testing
@@ -404,6 +422,10 @@ Eclipse Daanse Probe uses a **simplified authentication system** designed for de
 For testing catalog security and access control, you can specify **roles directly in the username**:
 
 **Username Format**: `username|role1|role2|role3|...`
+
+The role names must be roles the catalog declares - roles are intersected
+with the catalog's own, and an unknown name leaves the caller with none
+(FoodMart declares `Administrator`, `California manager` and `No HR Cube`).
 
 #### Examples
 
@@ -463,10 +485,10 @@ For testing catalog security and access control, you can specify **roles directl
 
 
 ## Requirements
-- Java 21+ JRE or JDK
+- Java 25+ JRE or JDK (the start script refuses older versions - the bundles declare osgi.ee=JavaSE-25)
 - 512MB+ RAM (recommended: 1GB+)
 - Write permissions for log directory
-- Network access for XMLA endpoint (port 8080)
+- Network access for the XMLA endpoint (container port 8080)
 
 ## Security Considerations
 
@@ -480,7 +502,7 @@ For testing catalog security and access control, you can specify **roles directl
 For issues and feature requests:
 - Eclipse Daanse Project: [Eclipse Foundation](https://www.eclipse.org/daanse/)
 - GitHub Issues: Report bugs and feature requests
-- Documentation: Check the projects Readme Files and (daanse.org)
+- Documentation: Check the project's README files and [daanse.org](https://daanse.org)
 
 ## License
 

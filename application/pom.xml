@@ -72,6 +72,31 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- The rowset providers, split out of the connector by family. The
+             connector above is only the dispatch: without these three the server
+             starts, accepts a Discover, and refuses every request type as
+             unknown - which is exactly what it did until 2026-08-15. -->
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.olap.xmla.connector.relational</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.olap.xmla.connector.relational.oledb</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.olap.xmla.connector.multidimensional</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
             <artifactId>org.eclipse.daanse.xmla.server.jdk.httpserver</artifactId>
