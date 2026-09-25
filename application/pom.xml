@@ -173,6 +173,21 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- DAX: served as a statement language of the XMLA connector -->
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.dax.engine.impl</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.daanse</groupId>
+            <artifactId>org.eclipse.daanse.dax.parser.ccc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.eclipse.daanse</groupId>
             <artifactId>org.eclipse.daanse.rolap.mapping.model</artifactId>
