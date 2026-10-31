@@ -6,3 +6,4 @@ load/*
 !load/.keep
 !load/*.cfg
 !catalog/*.xmi
+!catalog/*.sql
